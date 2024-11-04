@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+    
+  main:
+    allow-circular-references: true
+
+  datasource:
+    druid:
+      driver-class-name: ${helltractor.datasource.driver-class-name}
+      url: jdbc:mysql://${helltractor.datasource.host}:${helltractor.datasource.port}/${helltractor.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${helltractor.datasource.username}
+      password: ${helltractor.datasource.password}
+      connection-timeout: ${helltractor.datasource.timeout}
+      validation-timeout: ${helltractor.datasource.timeout}
+      max-lifetime: ${helltractor.datasource.lifetime}
+      maximum-pool-size: ${helltractor.datasource.pool.max}
+      minimum-idle: ${helltractor.datasource.pool.idle}
+
+#  redis:
+#    host: ${helltractor.redis.host}
+#    port: ${helltractor.redis.port}
+#    password: ${helltractor.redis.password}
+#    database: ${helltractor.redis.database}
+
+#mybatis:
+#    mapper-locations: classpath:mapper/*.xml
+#    type-aliases-package: com.helltractor.entity
+#    configuration:
+#        map-underscore-to-camel-case: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
