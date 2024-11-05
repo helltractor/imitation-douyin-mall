@@ -10,7 +10,9 @@
 
     <modules>
         <module>../common</module>
+        <module>../grpc</module>
         <module>../parent</module>
         <module>../server</module>
+
     </modules>
 </project>
