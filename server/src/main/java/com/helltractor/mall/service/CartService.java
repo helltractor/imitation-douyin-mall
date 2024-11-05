@@ -1,4 +1,4 @@
 package com.helltractor.mall.service;
 
-public interface ProductService {
+public class CartService {
 }
