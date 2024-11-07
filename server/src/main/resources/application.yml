@@ -1,6 +1,3 @@
-server:
-  port: 8080
-
 grpc:
   server:
     port: 9898
@@ -10,23 +7,30 @@ spring:
     name:
       imitation-douyin-mall
 
+  cloud:
+    consul:
+      discovery:
+        register: true
+        hostname: localhost
+        port: 8500
+
   profiles:
     active: dev
-    
+
   main:
     allow-circular-references: true
 
-  datasource:
-    druid:
-      driver-class-name: ${helltractor.datasource.driver-class-name}
-      url: jdbc:mysql://${helltractor.datasource.host}:${helltractor.datasource.port}/${helltractor.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${helltractor.datasource.username}
-      password: ${helltractor.datasource.password}
-      connection-timeout: ${helltractor.datasource.timeout}
-      validation-timeout: ${helltractor.datasource.timeout}
-      max-lifetime: ${helltractor.datasource.lifetime}
-      maximum-pool-size: ${helltractor.datasource.pool.max}
-      minimum-idle: ${helltractor.datasource.pool.idle}
+#  datasource:
+#    druid:
+#      driver-class-name: ${helltractor.datasource.driver-class-name}
+#      url: jdbc:mysql://${helltractor.datasource.host}:${helltractor.datasource.port}/${helltractor.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+#      username: ${helltractor.datasource.username}
+#      password: ${helltractor.datasource.password}
+#      connection-timeout: ${helltractor.datasource.timeout}
+#      validation-timeout: ${helltractor.datasource.timeout}
+#      max-lifetime: ${helltractor.datasource.lifetime}
+#      maximum-pool-size: ${helltractor.datasource.pool.max}
+#      minimum-idle: ${helltractor.datasource.pool.idle}
 
 #  redis:
 #    host: ${helltractor.redis.host}

@@ -20,13 +20,14 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.cloud.version>4.1.0</spring.cloud.version>
+        <spring.grpc.version>3.1.0.RELEASE</spring.grpc.version>
         <lombok.version>1.18.30</lombok.version>
         <mysql.version>8.0.33</mysql.version>
         <springdoc.version>2.4.0</springdoc.version>
         <protobuf.version>3.23.4</protobuf.version>
         <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
         <grpc.version>1.58.0</grpc.version>
-        <grpc.server.version>3.1.0.RELEASE</grpc.server.version>
     </properties>
 
     <build>
