@@ -1,7 +1,15 @@
 server:
   port: 8080
 
+grpc:
+  server:
+    port: 9898
+
 spring:
+  application:
+    name:
+      imitation-douyin-mall
+
   profiles:
     active: dev
     

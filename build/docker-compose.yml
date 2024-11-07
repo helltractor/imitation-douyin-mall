@@ -1,16 +1,16 @@
 version: '3'
 services:
   redis:
-    image: redis:6.2
-    container_name: redis-trade
+    image: redis:latest
+    container_name: redis-mall
     ports:
       - "6379:6379"
     volumes:
       - ./docker/redis-data:/data
 
   mysql:
-    image: mysql:8.0
-    container_name: mysql-trade
+    image: mysql:latest
+    container_name: mysql-mall
     ports:
       - "3306:3306"
     restart: always
