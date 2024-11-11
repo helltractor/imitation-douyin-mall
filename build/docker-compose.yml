@@ -2,7 +2,7 @@ version: '3.8'
 services:
   consul:
     image: hashicorp/consul:latest
-    container_name: consul-mall
+    container_name: consul
     ports:
 #      - "8300:8300"
 #      - "8301:8301"
@@ -15,7 +15,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: redis-mall
+    container_name: redis
     ports:
       - "6379:6379"
     volumes:
@@ -23,12 +23,11 @@ services:
 
   mysql:
     image: mysql:latest
-    container_name: mysql-mall
+    container_name: mysql
     stop_grace_period: 10s
     ports:
       - "3306:3306"
     restart: always
-    command: --default-authentication-plugin=mysql_native_password
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_AUTH_PLUGIN=caching_sha2_password
@@ -37,4 +36,20 @@ services:
       - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
       - ./docker/mysql-data:/var/lib/mysql
       - ./docker/mysql-logs:/var/log/mysql
+    command: --default-authentication-plugin=mysql_native_password
     entrypoint: bash -c "chmod 644 /etc/mysql/my.cnf && exec /usr/local/bin/docker-entrypoint.sh mysqld"
+
+  sentinel:
+    image: bladex/sentinel-dashboard:latest
+    container_name: sentinel-dashboard
+    ports:
+      - "8109:8109"
+    environment:
+      JAVA_OPTS: -Dserver.port=8109 -Dalibaba-csp.dashboard.server=8109 -Dproject.name=sentinel-dashboard
+      JVM_OPTS: -server -Xmx512M -Xms512M -XX:MaxMetaspaceSize=256M -XX:CompressedClassSpaceSize=50M -XX:ReservedCodeCacheSize=240M -XX:MaxDirectMemorySize=400M
+    volumes:
+      - ./docker/sentinel-logs:/root/logs
+
+networks:
+  default:
+    name: mall
