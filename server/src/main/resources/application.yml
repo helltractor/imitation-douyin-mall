@@ -2,23 +2,38 @@ grpc:
   server:
     port: 9898
 
+server:
+  port: 8080
+
 spring:
   application:
-    name:
-      imitation-douyin-mall
+    name: imitation-douyin-mall
 
   cloud:
     consul:
       discovery:
+        service-name: ${spring.application.name}
         register: true
         hostname: localhost
         port: 8500
 
+    sentinel:
+      block-page: /errorPage
+      enabled: true # 自动化配置是否生效
+      eager: true   # 禁用控制台懒加载
+      transport:
+        dashboard: localhost:8120 # 控制台地址
+#      datasource:
+#        ds1:
+#          consul:
+#            host: localhost
+#            port: 8500
+#            data-id: flowrule.json
+#            data-type: json
+#            rule-type: flow
+
   profiles:
     active: dev
-
-  main:
-    allow-circular-references: true
 
 #  datasource:
 #    druid:
@@ -51,3 +66,16 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     operations-sorter: method
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: "health,info"
+    health:
+      show-details: always
+      diskSpace:
+        # we can disable health check, default is enable
+        enabled: false
+      # sentinel:
+      #  enabled: false
