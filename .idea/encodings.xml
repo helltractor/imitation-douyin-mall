@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/build/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/build/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/grpc/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/grpc/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/parent/src/main/java" charset="UTF-8" />
@@ -13,5 +14,6 @@
     <file url="file://$PROJECT_DIR$/sentinel/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sentinel/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/server/src/main/resources" charset="UTF-8" />
   </component>
 </project>

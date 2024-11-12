@@ -17,6 +17,4 @@ public class SentinelRuleConfiguration {
         // TODO: Load Sentinel Rules
         logger.info("Load Sentinel Rules end!");
     }
-    
-    
 }
