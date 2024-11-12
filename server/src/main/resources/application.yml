@@ -8,25 +8,33 @@ server:
 spring:
   application:
     name: imitation-douyin-mall
+  config:
+    import: optional:consul:localhost:8500
   cloud:
     consul:
       discovery:
         service-name: ${spring.application.name}
-        register: true
         hostname: localhost
         port: 8500
+      config:
+        enabled: true
+        prefix: config
+        default-context: application
+        profile-separator: ','
+        data-key: data
+        format: yaml
     sentinel:
-      eager: true   # 禁用控制台懒加载
+      eager: true
       transport:
-        dashboard: localhost:8858 # 控制台地址
-#      datasource:
-#        ds1:
-#          consul:
-#            host: localhost
-#            port: 8500
-#            data-id: flowrule.json
-#            data-type: json
-#            rule-type: flow
+        dashboard: localhost:8858
+      datasource:
+        ds1:
+          consul:
+            host: localhost
+            port: 8500
+            data-type: json
+            rule-type: flow
+            rule-key: sentinel-rules
   profiles:
     active: dev
 #  datasource:
