@@ -43,9 +43,9 @@ services:
     image: bladex/sentinel-dashboard:latest
     container_name: sentinel-dashboard
     ports:
-      - "8109:8109"
+      - "8858:8858"
     environment:
-      JAVA_OPTS: -Dserver.port=8109 -Dalibaba-csp.dashboard.server=8109 -Dproject.name=sentinel-dashboard
+      JAVA_OPTS: -Dserver.port=8858 -Dcsp.dashboard.server=8858 -Dproject.name=sentinel-dashboard
       JVM_OPTS: -server -Xmx512M -Xms512M -XX:MaxMetaspaceSize=256M -XX:CompressedClassSpaceSize=50M -XX:ReservedCodeCacheSize=240M -XX:MaxDirectMemorySize=400M
     volumes:
       - ./docker/sentinel-logs:/root/logs
