@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.helltractor.mall.mapper.CartServiceMapper">
+
+    <insert id="insert" parameterType="com.helltractor.mall.proto.cart.CartItem">
+        insert into cart (user_id, product_id, quantity) values (#{userId}, #{cart.productId}, #{cart.quantity})
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        delete from cart where user_id = #{userId}
+    </delete>
+
+    <select id="search" resultMap="cartItemMap" parameterType="int">
+        select * from cart where user_id = #{userId}
+    </select>
+
+    <resultMap id="cartItemMap" type="com.helltractor.mall.proto.cart.CartItem">
+        <result property="productId_" column="product_id"/>
+        <result property="quantity_" column="quantity"/>
+    </resultMap>
+</mapper>

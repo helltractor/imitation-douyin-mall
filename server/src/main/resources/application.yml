@@ -1,6 +1,12 @@
 grpc:
   server:
     port: 9898
+  client:
+    imitation-douyin-mall:
+      address: 'discovery:///imitation-douyin-mall'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 server:
   port: 8080
@@ -13,7 +19,6 @@ spring:
   cloud:
     consul:
       discovery:
-        service-name: ${spring.application.name}
         hostname: localhost
         port: 8500
       config:
@@ -37,17 +42,11 @@ spring:
             rule-key: sentinel-rules
   profiles:
     active: dev
-#  datasource:
-#    druid:
-#      driver-class-name: ${helltractor.datasource.driver-class-name}
-#      url: jdbc:mysql://${helltractor.datasource.host}:${helltractor.datasource.port}/${helltractor.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-#      username: ${helltractor.datasource.username}
-#      password: ${helltractor.datasource.password}
-#      connection-timeout: ${helltractor.datasource.timeout}
-#      validation-timeout: ${helltractor.datasource.timeout}
-#      max-lifetime: ${helltractor.datasource.lifetime}
-#      maximum-pool-size: ${helltractor.datasource.pool.max}
-#      minimum-idle: ${helltractor.datasource.pool.idle}
+  datasource:
+    url: jdbc:mysql://${helltractor.datasource.host}:${helltractor.datasource.port}/${helltractor.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${helltractor.datasource.username}
+    password: ${helltractor.datasource.password}
+    driver-class-name: ${helltractor.datasource.driver-class-name}
 
 #  redis:
 #    host: ${helltractor.redis.host}
@@ -55,11 +54,10 @@ spring:
 #    password: ${helltractor.redis.password}
 #    database: ${helltractor.redis.database}
 
-#mybatis:
-#    mapper-locations: classpath:mapper/*.xml
-#    type-aliases-package: com.helltractor.entity
-#    configuration:
-#        map-underscore-to-camel-case: true
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+      map-underscore-to-camel-case: true
 
 casbin:
   storeType: file
