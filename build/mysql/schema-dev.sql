@@ -11,9 +11,9 @@ CREATE TABLE `shopping_cart` (
     `quantity` int DEFAULT '1' COMMENT '数量',
     `price` decimal(10,2) NOT NULL COMMENT '价格',
     `create_time` datetime NOT NULL COMMENT '创建时间',
-    PRIMARY KEY (`id`)
-    INDEX `user_id` (`user_id`)
-    INDEX `product_id` (`product_id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`),
+    INDEX `idx_product_id` (`product_id`)
 ) COMMENT='购物车';
 
 DROP TABLE IF EXISTS `address_book`;
@@ -35,8 +35,8 @@ CREATE TABLE `address_book` (
     `is_default` tinyint DEFAULT 0 COMMENT '是否默认地址',
     `create_time` datetime NOT NULL COMMENT '创建时间',
     `update_time` datetime NOT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
-    INDEX `user_id` (`user_id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`)
 ) COMMENT='地址簿';
 
 DROP TABLE IF EXISTS `product`;
@@ -68,8 +68,8 @@ CREATE TABLE `credit_card` (
     `validity` varchar(10) DEFAULT NULL COMMENT '卡有效期',
     `create_time` datetime NOT NULL COMMENT '创建时间',
     `is_default` tinyint DEFAULT 0 COMMENT '是否默认卡',
-    PRIMARY KEY (`id`)
-    INDEX `user_id` (`user_id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`)
 ) COMMENT='信用卡';
 
 DROP TABLE IF EXISTS `orders`;
@@ -97,9 +97,9 @@ CREATE TABLE `orders` (
     `estimated_delivery_time` datetime DEFAULT NULL COMMENT '预计送达时间',
     `delivery_time` datetime DEFAULT NULL COMMENT '送达时间',
     `closing_time` datetime DEFAULT NULL COMMENT '成交时间',
-    PRIMARY KEY (`id`)
-    INDEX `user_id` (`user_id`)
-    INDEX `address_book_id` (`address_book_id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`),
+    INDEX `idx_address_book_id` (`address_book_id`)
 ) COMMENT='订单';
 
 DROP TABLE IF EXISTS `order_detail`;
@@ -111,9 +111,9 @@ CREATE TABLE `order_detail` (
     `picture` varchar(255) DEFAULT NULL COMMENT '图片路径',
     `quantity` int NOT NULL COMMENT '数量',
     `price` decimal(10,2) NOT NULL COMMENT '价格',
-    PRIMARY KEY (`id`)
-    INDEX `order_id` (`order_id`)
-    INDEX `product_id` (`product_id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_order_id` (`order_id`),
+    INDEX `idx_product_id` (`product_id`)
 ) COMMENT='订单明细';
 
 DROP TABLE IF EXISTS `user`;
@@ -140,6 +140,6 @@ CREATE TABLE `confirm_code` (
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `expire_time` datetime NOT NULL COMMENT '过期时间',
     `is_used` tinyint DEFAULT 0 COMMENT '是否已使用',
-    PRIMARY KEY (`id`)
-    INDEX `user_id` (`user_id`)
+    PRIMARY KEY (`id`),
+    INDEX `idx_user_id` (`user_id`)
 ) COMMENT='验证码';

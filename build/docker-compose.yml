@@ -24,7 +24,6 @@ services:
   mysql:
     image: mysql:latest
     container_name: mysql
-    stop_grace_period: 10s
     ports:
       - "3306:3306"
     restart: always
@@ -32,12 +31,8 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_AUTH_PLUGIN=caching_sha2_password
     volumes:
-      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/exchange-schema.sql:ro
-      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+      - ./mysql/schema.sql:/docker-entrypoint-initdb/mall-schema.sql.d:ro
       - ./docker/mysql-data:/var/lib/mysql
-      - ./docker/mysql-logs:/var/log/mysql
-    command: --default-authentication-plugin=mysql_native_password
-    entrypoint: bash -c "chmod 644 /etc/mysql/my.cnf && exec /usr/local/bin/docker-entrypoint.sh mysqld"
 
   sentinel:
     image: bladex/sentinel-dashboard:latest
