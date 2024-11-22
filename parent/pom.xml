@@ -37,6 +37,7 @@
         <casbin.version>1.8.0</casbin.version>
         <fastjson.version>1.2.76</fastjson.version>
         <alibaba-csp.version>1.8.8</alibaba-csp.version>
+        <jsonwebtoken.version>0.12.1</jsonwebtoken.version>
     </properties>
 
     <dependencyManagement>

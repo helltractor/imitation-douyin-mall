@@ -81,3 +81,9 @@ management:
         enabled: false
       # sentinel:
       #  enabled: false
+
+helltractor:
+  jwt:
+    secret-key: mall
+    ttl: 7200000
+    token-name: token
