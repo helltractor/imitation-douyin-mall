@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 
 import java.util.List;
 
+import static com.helltractor.mall.constant.BaseParamConstant.*;
+import static com.helltractor.mall.constant.ModelConstant.CART_ENTITY;
 import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
@@ -17,37 +19,34 @@ public class CartServiceMapperTest {
     @Autowired
     private CartServiceMapper cartServiceMapper;
     
-    private static final int userId = 0;
-    
-    private static final int productId = 1;
-    
-    private static final int quantity = 2;
-    
-    private static final CartItem cartItem = CartItem.newBuilder()
-            .setProductId(productId)
-            .setQuantity(quantity)
-            .build();
-    
     @Test
-    public void testUnit() {
-        List<CartItem> cartItems = cartServiceMapper.search(userId);
+    public void testUnion() {
+        List<CartItem> cartItems = cartServiceMapper.searchCartByUserId(USER_ID_TEST);
         
         assertTrue(cartItems.isEmpty());
         
-        cartServiceMapper.insert(userId, cartItem);
-        cartItems = cartServiceMapper.search(userId);
+        cartServiceMapper.insertCart(CART_ENTITY);
+        cartItems = cartServiceMapper.searchCartByUserId(USER_ID_TEST);
         
         assertFalse(cartItems.isEmpty());
-        assertEquals(productId, cartItems.get(0).getProductId());
-        assertEquals(quantity, cartItems.get(0).getQuantity());
+        assertEquals(CART_ENTITY.getProductId(), cartItems.get(0).getProductId());
+        assertEquals(CART_ENTITY.getQuantity(), cartItems.get(0).getQuantity());
         
-        cartServiceMapper.delete(userId);
-        cartItems = cartServiceMapper.search(userId);
+        cartServiceMapper.deleteCart(USER_ID_TEST);
+        cartItems = cartServiceMapper.searchCartByUserId(USER_ID_TEST);
         
         assertTrue(cartItems.isEmpty());
     }
     
-    // TODO: add more test cases
-    // public void testInsertSameProductId() {}
+    @Test
+    public void testInsertCartSameProductId() {
+        for (int i = 0; i < CART_ENTITY.getProductId(); i++) {
+            cartServiceMapper.insertCart(CART_ENTITY);
+        }
+        List<CartItem> cartItems = cartServiceMapper.searchCartByUserId(USER_ID_TEST);
+        
+        assertFalse(cartItems.isEmpty());
+        assertEquals(CART_ENTITY.getQuantity() * CART_ENTITY.getProductId(), cartItems.get(0).getQuantity());
+    }
     
 }
