@@ -3,20 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.helltractor.mall.mapper.CartServiceMapper">
 
-    <insert id="insert" parameterType="com.helltractor.mall.proto.cart.CartItem">
-        insert into cart (user_id, product_id, quantity) values (#{userId}, #{cart.productId}, #{cart.quantity})
+    <insert id="insertCart" parameterType="map">
+        insert into cart (user_id, product_id, quantity, create_time) values
+        (
+            #{userId}, #{productId}, #{quantity},
+            <choose>
+                <when test="createTime != null">#{createTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>
+        )
+        on duplicate key update quantity = quantity + #{quantity}
     </insert>
 
-    <delete id="delete" parameterType="int">
+    <delete id="deleteCart" parameterType="int">
         delete from cart where user_id = #{userId}
     </delete>
 
-    <select id="search" resultMap="cartItemMap" parameterType="int">
-        select * from cart where user_id = #{userId}
+    <select id="searchCartByUserId" resultMap="cartItemMap" parameterType="int">
+        select product_id, quantity from cart where user_id = #{userId}
     </select>
 
     <resultMap id="cartItemMap" type="com.helltractor.mall.proto.cart.CartItem">
         <result property="productId_" column="product_id"/>
         <result property="quantity_" column="quantity"/>
     </resultMap>
+
 </mapper>

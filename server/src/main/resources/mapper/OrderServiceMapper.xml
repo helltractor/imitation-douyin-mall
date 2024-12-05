@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.helltractor.mall.mapper.OrderServiceMapper">
+
+    <insert id="insertOrders">
+        insert into orders (order_id, user_id, address_book_id, user_currency, email, create_time, update_time) values
+        (
+            #{orderId}, #{userId}, #{addressBookId}, #{userCurrency}, #{email},
+            <choose>
+                <when test="createTime != null">#{createTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>,
+            <choose>
+                <when test="updateTime != null">#{updateTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>
+        )
+    </insert>
+
+    <insert id="insertAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into address_book (user_id, country_name, state_name, city_name, zip_code, detail, create_time, update_time) values
+        (
+            #{userId}, #{country}, #{state}, #{city}, #{zipCode}, #{streetAddress},
+            <choose>
+                <when test="createTime != null">#{createTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>,
+            <choose>
+                <when test="updateTime != null">#{updateTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>
+        )
+    </insert>
+
+    <insert id="insertOrderItem">
+        insert into order_detail (order_id, product_id, quantity, cost) values
+        (#{orderId}, #{productId}, #{quantity}, #{cost})
+    </insert>
+
+    <insert id="insertOrderItems">
+        <foreach collection="list" item="item" index="index" separator=";">
+            insert into order_detail (order_id, product_id, quantity, cost) values
+            (#{item.orderId}, #{item.productId}, #{item.quantity}, #{item.cost})
+        </foreach>
+    </insert>
+
+    <update id="updateAddress">
+        update address_book set
+            <if test="country != null">country_name = #{country},</if>
+            <if test="state != null">state_name = #{state},</if>
+            <if test="city != null">city_name = #{city},</if>
+            <if test="zipCode != null">zip_code = #{zipCode},</if>
+            <if test="streetAddress != null">detail = #{streetAddress},</if>
+            <if test="update_time != null">update_time = #{update_time}</if>
+            <if test="update_time == null">update_time = now()</if>,
+        where id = #{addressBookId}
+    </update>
+
+    <update id="updatePaidStatus">
+        update orders set paid_status = 1 where order_id = #{orderId} and user_id = #{userId}
+    </update>
+
+    <select id="searchAddress" resultMap="AddressMap">
+        select
+            ab.country_name as country,
+            ab.state_name as state,
+            ab.city_name as city,
+            ab.zip_code as zip_code,
+            ab.detail as street_address
+        from address_book ab
+        where ab.id = #{addressBookId}
+    </select>
+
+    <resultMap id="AddressMap" type="com.helltractor.mall.proto.order.Address">
+        <id property="country_" column="country"/>
+        <result property="state_" column="state"/>
+        <result property="city_" column="city"/>
+        <result property="zipCode_" column="zip_code"/>
+        <result property="streetAddress_" column="street_address"/>
+    </resultMap>
+
+    <select id="searchOrder" resultMap="OrderMap">
+        select
+            o.order_id as order_id,
+            o.user_id as user_id,
+            o.user_currency as user_currency,
+            o.email as email,
+            o.create_time as create_at,
+            ab.id as address_book_id,
+            ab.country_name as country,
+            ab.state_name as state,
+            ab.city_name as city,
+            ab.zip_code as zip_code,
+            ab.detail as street_address,
+            od.product_id as product_id,
+            od.quantity as quantity,
+            od.cost as cost
+        from orders o
+        left outer join address_book ab on o.address_book_id = ab.id
+        left outer join order_detail od on o.order_id = od.order_id
+        where o.user_id = #{userId}
+    </select>
+
+    <resultMap id="OrderMap" type="com.helltractor.mall.proto.order.Order">
+        <!-- 基本字段 -->
+        <id property="orderId_" column="order_id"/>
+        <result property="userId_" column="user_id"/>
+        <result property="userCurrency_" column="user_currency"/>
+        <result property="email_" column="email"/>
+        <result property="createdAt_" column="created_at"/>
+        <!-- 嵌套 Address -->
+        <association property="address_" column="address_book_id"
+                     javaType="com.helltractor.mall.proto.order.Address"
+                     select="searchAddress"/>
+        <!-- 嵌套集合 OrderItems -->
+        <collection property="orderItems_" javaType="ArrayList" column="order_id"
+                    ofType="com.helltractor.mall.proto.order.OrderItem"
+                    select="searchOrderItems"/>
+    </resultMap>
+
+    <select id="searchOrders" resultType="com.helltractor.mall.entity.OrderEntity">
+        select
+            o.order_id as order_id,
+            o.user_id as user_id,
+            o.address_book_id as address_book_id,
+            o.email as email,
+            o.user_currency as user_currency
+        from orders o
+        where o.user_id = #{userId}
+    </select>
+
+    <select id="searchOrderItems" resultMap="OrderItemMap">
+        <if test="orderId != null">
+            select
+            od.product_id as product_id,
+            od.quantity as quantity,
+            od.cost as cost
+            from order_detail od
+            where od.order_id = #{orderId}
+        </if>
+    </select>
+
+    <resultMap id="OrderItemMap" type="com.helltractor.mall.proto.order.OrderItem">
+        <result property="cost_" column="cost"/>
+        <association property="item_" javaType="com.helltractor.mall.proto.cart.CartItem">
+            <result property="productId_" column="product_id"/>
+            <result property="quantity_" column="quantity"/>
+        </association>
+    </resultMap>
+
+    <select id="searchPaidStatus" resultType="int">
+        select paid_status from orders where order_id = #{orderId} and user_id = #{userId}
+    </select>
+
+</mapper>

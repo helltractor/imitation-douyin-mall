@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.helltractor.mall.mapper.PaymentServiceMapper">
+
+    <insert id="insert">
+        insert into payment (transaction_id, user_id, order_id, amount, create_time) values
+        (
+            #{transactionId}, #{userId}, #{orderId}, #{amount},
+            <choose>
+                <when test="createTime != null">#{createTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>
+        )
+    </insert>
+
+    <select id="searchIdAndOrderId" resultMap="CheckoutRespMap" parameterType="map">
+        select transaction_id, order_id from payment
+        where user_id = #{userId}
+    </select>
+
+    <select id="searchTransactionId" resultType="string">
+        select transaction_id from payment
+        where user_id = #{userId} and order_id = #{orderId}
+    </select>
+
+    <resultMap id="CheckoutRespMap" type="com.helltractor.mall.proto.checkout.CheckoutResp">
+        <id property="transactionId_" column="transaction_id"/>
+        <result property="orderId_" column="order_id"/>
+    </resultMap>
+
+</mapper>

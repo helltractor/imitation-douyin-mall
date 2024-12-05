@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.helltractor.mall.mapper.ProductCatalogServiceMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into product (name, price, description, picture, categories, create_time, update_time)
+        values (
+            #{name}, #{price}, #{description}, #{picture}, #{categories},
+            <choose>
+                <when test="createTime != null">#{createTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>,
+            <choose>
+                <when test="updateTime != null">#{updateTime}</when>
+                <otherwise>now()</otherwise>
+            </choose>
+        )
+    </insert>
+
+    <update id="update" parameterType="com.helltractor.mall.proto.product.Product">
+        update product
+        set
+            <if test="name != null">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="categories != null">categories = #{categories},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+            <if test="updateTime == null">update_time = now()</if>,
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from product where id = #{id}
+    </delete>
+
+    <select id="searchProductById" resultMap="ProductMap" parameterType="int">
+        select
+            p.id as id,
+            p.name as name,
+            p.price as price,
+            p.description as description,
+            p.picture as picture
+        from product p where p.id = #{id}
+    </select>
+
+    <select id="searchProductByQuery" resultMap="ProductMap">
+        select
+            p.id as id,
+            p.name as name,
+            p.price as price,
+            p.description as description,
+            p.picture as picture
+        from product p
+        where p.name like concat('%', #{query}, '%') or p.categories like concat('%', #{query}, '%')
+    </select>
+
+    <select id="listProducts" resultMap="ProductMap">
+        select
+            p.id as id,
+            p.name as name,
+            p.price as price,
+            p.description as description,
+            p.picture as picture
+        from product p
+        where p.categories like concat('%', #{categoryName}, '%')
+        limit #{pageSize} offset #{page}
+    </select>
+
+    <resultMap id="ProductMap" type="com.helltractor.mall.proto.product.Product">
+        <id property="id_" column="id"/>
+        <result property="name_" column="name"/>
+        <result property="price_" column="price"/>
+        <result property="description_" column="description"/>
+        <result property="picture_" column="picture"/>
+<!--        <result property="categories_" column="categories" typeHandler="com.helltractor.mall.handler.JsonStringToListHandler"/>-->
+    </resultMap>
+
+</mapper>
