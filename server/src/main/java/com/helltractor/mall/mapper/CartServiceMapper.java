@@ -1,5 +1,6 @@
 package com.helltractor.mall.mapper;
 
+import com.helltractor.mall.entity.CartEntity;
 import com.helltractor.mall.proto.cart.CartItem;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,14 +9,10 @@ import java.util.List;
 @Mapper
 public interface CartServiceMapper {
     
-    void insert(int userId, CartItem cart);
+    void insertCart(CartEntity cartEntity);
     
-    void delete(int userId);
+    void deleteCart(int userId);
     
-    List<CartItem> search(int userId);
-    
-    // TODO: add more methods
-    // void searchByProductId(int userId, int productId);
-    // void updateByProductId(int userId, int productId, CartItem cart);
+    List<CartItem> searchCartByUserId(int userId);
     
 }

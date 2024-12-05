@@ -1,9 +1,9 @@
 package com.helltractor.mall.config;
 
 import com.helltractor.mall.interceptor.CasbinGrpcServerInterceptor;
+import com.helltractor.mall.interceptor.JwtGrpcServerInterceptor;
 import com.helltractor.mall.interceptor.LogGrpcInterceptor;
 import net.devh.boot.grpc.server.interceptor.GrpcGlobalServerInterceptor;
-import org.slf4j.Logger;
 import org.springframework.context.annotation.Configuration;
 import com.alibaba.csp.sentinel.adapter.grpc.SentinelGrpcServerInterceptor;
 
@@ -30,4 +30,14 @@ public class GlobalInterceptorConfiguration {
     CasbinGrpcServerInterceptor casbinGrpcServerInterceptor() {
         return new CasbinGrpcServerInterceptor();
     }
+    
+    
+    /**
+     * Register the Jwt gRPC server interceptor.
+     */
+    @GrpcGlobalServerInterceptor
+    JwtGrpcServerInterceptor jwtGrpcServerInterceptor() {
+        return new JwtGrpcServerInterceptor();
+    }
+    
 }

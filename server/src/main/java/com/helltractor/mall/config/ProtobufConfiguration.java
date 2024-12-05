@@ -17,4 +17,5 @@ public class ProtobufConfiguration {
     public HttpMessageConverters protobufHttpMessageConverters() {
         return new HttpMessageConverters(protobufHttpMessageConverter());
     }
+    
 }
