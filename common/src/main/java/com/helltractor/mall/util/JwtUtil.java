@@ -1,4 +1,4 @@
-package com.helltractor.mall.utils;
+package com.helltractor.mall.util;
 
 import com.helltractor.mall.constant.JwtConstant;
 import io.jsonwebtoken.*;

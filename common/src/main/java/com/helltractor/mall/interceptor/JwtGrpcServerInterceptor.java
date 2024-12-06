@@ -1,7 +1,7 @@
 package com.helltractor.mall.interceptor;
 
 import com.helltractor.mall.constant.JwtConstant;
-import com.helltractor.mall.utils.JwtUtil;
+import com.helltractor.mall.util.JwtUtil;
 
 import io.grpc.*;
 import io.jsonwebtoken.*;
