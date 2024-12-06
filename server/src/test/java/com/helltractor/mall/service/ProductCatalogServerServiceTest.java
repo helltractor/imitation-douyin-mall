@@ -2,7 +2,6 @@ package com.helltractor.mall.service;
 
 import com.helltractor.mall.config.ServiceConfiguration;
 import com.helltractor.mall.mapper.ProductCatalogServiceMapper;
-import com.helltractor.mall.proto.payment.ChargeResp;
 import com.helltractor.mall.proto.product.*;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.imitationDouyinMall.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test"
 })
 @SpringJUnitConfig(ServiceConfiguration.class)
 @DirtiesContext

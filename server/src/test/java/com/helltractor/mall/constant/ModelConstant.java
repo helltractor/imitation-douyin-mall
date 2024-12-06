@@ -34,7 +34,7 @@ public class ModelConstant {
             .build();
     
     public static final Cart CART = Cart.newBuilder()
-            .setUserId(USER_ID_TEST)
+            .setUserId(USER_ID)
             .addItems(CART_ITEM_ONE)
             .addItems(CART_ITEM_TWO)
             .build();

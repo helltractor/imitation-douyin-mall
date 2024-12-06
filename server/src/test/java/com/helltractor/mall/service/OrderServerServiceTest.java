@@ -6,12 +6,10 @@ import com.helltractor.mall.entity.OrderDetailEntity;
 import com.helltractor.mall.entity.OrderEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.OrderServiceMapper;
-import com.helltractor.mall.proto.checkout.CheckoutResp;
 import com.helltractor.mall.proto.order.*;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -32,7 +30,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.imitationDouyinMall.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test"
 })
 @SpringJUnitConfig(ServiceConfiguration.class)
 @DirtiesContext

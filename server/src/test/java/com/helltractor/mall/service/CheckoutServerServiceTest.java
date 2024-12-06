@@ -5,12 +5,15 @@ import com.helltractor.mall.config.ServiceConfiguration;
 import com.helltractor.mall.proto.cart.*;
 import com.helltractor.mall.proto.checkout.CheckoutResp;
 import com.helltractor.mall.proto.order.OrderResult;
+import com.helltractor.mall.proto.order.OrderServiceGrpc;
 import com.helltractor.mall.proto.order.PlaceOrderReq;
 import com.helltractor.mall.proto.order.PlaceOrderResp;
 import com.helltractor.mall.proto.payment.ChargeReq;
 import com.helltractor.mall.proto.payment.ChargeResp;
+import com.helltractor.mall.proto.payment.PaymentServiceGrpc;
 import com.helltractor.mall.proto.product.GetProductReq;
 import com.helltractor.mall.proto.product.GetProductResp;
+import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +32,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.imitationDouyinMall.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test"
 })
 @SpringJUnitConfig(ServiceConfiguration.class)
 @DirtiesContext
@@ -39,16 +42,16 @@ class CheckoutServerServiceTest {
     private CheckoutServerService checkoutServerService;
     
     @Mock
-    private CartClientService cartClientService;
+    private CartServiceGrpc.CartServiceBlockingStub cartClientService;
     
     @Mock
-    private OrderClientService orderClientService;
+    private OrderServiceGrpc.OrderServiceBlockingStub orderClientService;
     
     @Mock
-    private PaymentClientService paymentClientService;
+    private PaymentServiceGrpc.PaymentServiceBlockingStub paymentClientService;
     
     @Mock
-    private ProductCatalogClientService productCatalogClientService;
+    private ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub productCatalogClientService;
 
     @BeforeEach
     void setUp() {

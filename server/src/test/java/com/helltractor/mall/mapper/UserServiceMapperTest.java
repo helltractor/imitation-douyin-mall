@@ -6,8 +6,6 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
-import java.util.Random;
-
 import static com.helltractor.mall.constant.BaseParamConstant.*;
 import static com.helltractor.mall.constant.ModelConstant.USER_ENTITY;
 import static com.helltractor.mall.constant.ModelConstant.USER_ENTITY_RANDOM;

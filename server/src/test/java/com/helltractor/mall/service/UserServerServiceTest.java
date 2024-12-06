@@ -20,7 +20,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.helltractor.mall.constant.BaseParamConstant.*;
-import static com.helltractor.mall.constant.ModelConstant.USER_ENTITY;
 import static com.helltractor.mall.constant.ModelConstant.USER_ENTITY_TEST;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,10 +29,9 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.imitationDouyinMall.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test"
 })
 @SpringJUnitConfig(ServiceConfiguration.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext
 public class UserServerServiceTest {
     
@@ -45,6 +43,13 @@ public class UserServerServiceTest {
     
     @Autowired
     private TransferEntityHandler handler;
+    
+    public static final UserEntity USER_ENTITY = UserEntity.builder()
+            .id(USER_ID)
+            .email(EMAIL)
+            .password(ENCRYPT_PASSWORD)
+            .confirmPassword(CONFIRM_PASSWORD)
+            .build();
     
     @BeforeEach
     void setUp() {
@@ -98,23 +103,21 @@ public class UserServerServiceTest {
     }
     
     @Test
-    @Order(3)
     void testLogin() {
         when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(USER_ENTITY);
-        
+
         LoginReq loginReq = LoginReq.newBuilder().setEmail(EMAIL).setPassword(PASSWORD).build();
         StreamRecorder<LoginResp> responseObverse = StreamRecorder.create();
         userServerService.login(loginReq, responseObverse);
-        
+
         assertNull(responseObverse.getError());
         LoginResp loginResponse = responseObverse.getValues().get(0);
         assertEquals(USER_ID, loginResponse.getUserId());
-        
+
         verify(userServiceMapper).searchUserByEmail(any(String.class));
     }
     
     @Test
-    @Order(1)
     void testLoginUserNotFound() {
         when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(USER_ENTITY_TEST);
         
@@ -129,7 +132,6 @@ public class UserServerServiceTest {
     }
     
     @Test
-    @Order(1)
     void testLoginPasswordIncorrect() {
         when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(USER_ENTITY);
         

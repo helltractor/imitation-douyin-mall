@@ -8,6 +8,7 @@ import com.helltractor.mall.proto.cart.*;
 
 import com.helltractor.mall.proto.product.GetProductReq;
 import com.helltractor.mall.proto.product.GetProductResp;
+import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
@@ -18,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.helltractor.mall.constant.BaseParamConstant.*;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.imitationDouyinMall.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test"
 })
 @SpringJUnitConfig(classes = ServiceConfiguration.class)
 @DirtiesContext
@@ -46,7 +46,7 @@ class CartServerServiceTest {
     private CartServiceMapper cartServiceMapper;
     
     @Mock
-    private ProductCatalogClientService productCatalogClientService;
+    private ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub productCatalogClientService;
     
     @BeforeEach
     void setUp() {

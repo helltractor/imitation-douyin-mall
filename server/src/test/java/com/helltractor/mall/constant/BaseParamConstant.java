@@ -4,6 +4,8 @@ import com.google.protobuf.LazyStringArrayList;
 import com.helltractor.mall.utils.JwtUtil;
 import com.helltractor.mall.utils.PasswordUtil;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Random;
@@ -33,7 +35,10 @@ public class BaseParamConstant {
     
     public static final String DESCRIPTION = "description";
     public static final String PICTURE = "picture";
-    public static final Float PRICE = new Random().nextFloat(10000) * 100;
+    public static final Float PRICE = BigDecimal.valueOf(new Random().nextFloat() * 10000)
+            .setScale(2, RoundingMode.HALF_UP)
+            .floatValue();
+    
     public static final Integer PAGE = 0;
     public static final Integer PAGE_SIZE = 10;
     public static final String CATEGORY_NAME = "category";
@@ -77,7 +82,11 @@ public class BaseParamConstant {
     public static final String TOKEN = JwtUtil.createJWT(Map.of(JwtClaimConstant.USER_ID, USER_ID_TEST));
     public static final String TOKEN_EXPIRED = JwtUtil.createJWT(Map.of(JwtClaimConstant.USER_ID, USER_ID_TEST), System.currentTimeMillis() - JwtConstant.TTL);
     
-    public static final Float AMOUNT = new Random().nextFloat(10000) * 100;
-    public static final Float COST = new Random().nextFloat(10000) * 100;
+    public static final Float AMOUNT = BigDecimal.valueOf(new Random().nextFloat() * 10000)
+            .setScale(2, RoundingMode.HALF_UP)
+            .floatValue();
+    public static final Float COST = BigDecimal.valueOf(new Random().nextFloat() * 10000)
+            .setScale(2, RoundingMode.HALF_UP)
+            .floatValue();
     
 }

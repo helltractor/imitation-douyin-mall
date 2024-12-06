@@ -5,14 +5,11 @@ import com.helltractor.mall.config.ServiceConfiguration;
 import com.helltractor.mall.entity.PaymentEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.PaymentServiceMapper;
-import com.helltractor.mall.proto.checkout.CheckoutResp;
 import com.helltractor.mall.proto.payment.ChargeReq;
 import com.helltractor.mall.proto.payment.ChargeResp;
 import io.grpc.internal.testing.StreamRecorder;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -32,7 +29,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.imitationDouyinMall.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test"
 })
 @SpringJUnitConfig(ServiceConfiguration.class)
 @DirtiesContext

@@ -1,25 +1,19 @@
 package com.helltractor.mall.config;
 
-import com.helltractor.mall.entity.ProductEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
-import com.helltractor.mall.mapper.*;
 import com.helltractor.mall.service.*;
-
 import com.zaxxer.hikari.HikariDataSource;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.checkerframework.checker.units.qual.C;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
@@ -49,70 +43,40 @@ public class ServiceConfiguration {
     private String mapperLocations;
     
     @Bean
-    TransferEntityHandler TransferEntityHandler() {
+    TransferEntityHandler transferEntityHandler() {
         return new TransferEntityHandler();
-    }
-    
-    @Bean
-    AuthClientService authClientService() {
-        return new AuthClientService();
-    }
-    
-    @Bean
-    CartClientService cartClientService() {
-        return new CartClientService();
-    }
-    
-    @Bean
-    OrderClientService orderClientService() {
-        return new OrderClientService();
-    }
-    
-    @Bean
-    PaymentClientService paymentClientService() {
-        return new PaymentClientService();
-    }
-    
-    @Bean
-    ProductCatalogClientService productCatalogClientService() {
-        return new ProductCatalogClientService();
-    }
-    
-    @Bean
-    UserClientService userClientService() {
-        return new UserClientService();
     }
     
     @Bean
     AuthServerService authService() {
         return new AuthServerService();
     }
-    
+
     @Bean
     CartServerService cartService() {
         return new CartServerService();
     }
-    
+
     @Bean
     CheckoutServerService checkoutService() {
         return new CheckoutServerService();
     }
-    
+
     @Bean
     OrderServerService orderServerService() {
         return new OrderServerService();
     }
-    
+
     @Bean
     PaymentServerService paymentService() {
         return new PaymentServerService();
     }
-    
+
     @Bean
     ProductCatalogServerService productCatalogService() {
         return new ProductCatalogServerService();
     }
-    
+
     @Bean
     UserServerService userService() {
         return new UserServerService();
