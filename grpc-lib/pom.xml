@@ -11,7 +11,7 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>grpc</artifactId>
+    <artifactId>grpc-lib</artifactId>
 
     <dependencies>
         <dependency>
