@@ -1,5 +1,6 @@
 package com.helltractor.mall.mapper;
 
+import com.helltractor.mall.config.AbstractIntegrationTest;
 import com.helltractor.mall.proto.product.Product;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class ProductCatalogServiceMapperTest {
+public class ProductCatalogServiceMapperTest extends AbstractIntegrationTest {
 
     @Autowired
     ProductCatalogServiceMapper productCatalogServiceMapper;

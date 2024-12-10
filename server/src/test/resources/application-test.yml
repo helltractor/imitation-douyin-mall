@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:tc:mysql:8.0.36:///testdb?TC_INITSCRIPT=file:src/test/resources/schema.sql
+    username: root
+    password: password
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

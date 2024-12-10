@@ -1,5 +1,7 @@
 package com.helltractor.mall.mapper;
 
+import com.helltractor.mall.config.AbstractIntegrationTest;
+import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.OrderEntity;
 import com.helltractor.mall.proto.order.Address;
 import com.helltractor.mall.proto.order.Order;
@@ -17,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class OrderServiceMapperTest {
+public class OrderServiceMapperTest extends AbstractIntegrationTest {
     
     @Autowired
     OrderServiceMapper orderServiceMapper;

@@ -1,5 +1,6 @@
 package com.helltractor.mall.mapper;
 
+import com.helltractor.mall.config.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PaymentServiceMapperTest {
+public class PaymentServiceMapperTest extends AbstractIntegrationTest {
     
     @Autowired
     PaymentServiceMapper paymentServiceMapper;

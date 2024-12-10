@@ -1,5 +1,6 @@
 package com.helltractor.mall.service;
 
+import com.helltractor.mall.config.AbstractIntegrationTest;
 import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.UserEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
@@ -30,11 +31,11 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test",
         "grpc.server.port=-1",
-        "grpc.client.serviceServer.address=in-process:test"
+        "grpc.client.serviceServer.address=in-process:test",
 })
 @SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
-public class UserServerServiceTest {
+public class UserServerServiceTest extends AbstractIntegrationTest {
     
     @InjectMocks
     private UserServerService userServerService;

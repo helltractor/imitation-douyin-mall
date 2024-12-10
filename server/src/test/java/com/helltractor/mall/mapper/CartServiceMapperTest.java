@@ -1,5 +1,6 @@
 package com.helltractor.mall.mapper;
 
+import com.helltractor.mall.config.AbstractIntegrationTest;
 import com.helltractor.mall.proto.cart.CartItem;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CartServiceMapperTest {
+public class CartServiceMapperTest extends AbstractIntegrationTest {
     
     @Autowired
     CartServiceMapper cartServiceMapper;
