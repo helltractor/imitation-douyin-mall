@@ -1,6 +1,6 @@
 package com.helltractor.mall.service;
 
-import com.helltractor.mall.config.ServiceConfiguration;
+import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.OrderAddressEntity;
 import com.helltractor.mall.entity.OrderDetailEntity;
 import com.helltractor.mall.entity.OrderEntity;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
         "grpc.server.port=-1",
         "grpc.client.serviceServer.address=in-process:test"
 })
-@SpringJUnitConfig(ServiceConfiguration.class)
+@SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
 public class OrderServerServiceTest {
     

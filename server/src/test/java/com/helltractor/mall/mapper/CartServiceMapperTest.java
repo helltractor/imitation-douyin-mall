@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CartServiceMapperTest {
     
     @Autowired
-    private CartServiceMapper cartServiceMapper;
+    CartServiceMapper cartServiceMapper;
     
     @Test
-    public void testUnion() {
+    void testUnion() {
         List<CartItem> cartItems = cartServiceMapper.searchCartByUserId(USER_ID_TEST);
         
         assertTrue(cartItems.isEmpty());
@@ -39,7 +39,7 @@ public class CartServiceMapperTest {
     }
     
     @Test
-    public void testInsertCartSameProductId() {
+    void testInsertCartSameProductId() {
         for (int i = 0; i < CART_ENTITY.getProductId(); i++) {
             cartServiceMapper.insertCart(CART_ENTITY);
         }

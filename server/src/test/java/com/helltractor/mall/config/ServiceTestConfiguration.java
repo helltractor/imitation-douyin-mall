@@ -1,7 +1,6 @@
 package com.helltractor.mall.config;
 
 import com.helltractor.mall.handler.TransferEntityHandler;
-import com.helltractor.mall.service.*;
 import com.zaxxer.hikari.HikariDataSource;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
@@ -15,6 +14,10 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import javax.sql.DataSource;
 
@@ -25,61 +28,31 @@ import javax.sql.DataSource;
         GrpcServerFactoryAutoConfiguration.class,   // Select server implementation
         GrpcClientAutoConfiguration.class   // Support @GrpcClient annotation
 })
-public class ServiceConfiguration {
-
+public class ServiceTestConfiguration extends RedisConfiguration {
+    
     @Value("${spring.datasource.url}")
     private String url;
-
+    
     @Value("${spring.datasource.username}")
     private String username;
-
+    
     @Value("${spring.datasource.password}")
     private String password;
-
+    
     @Value("${spring.datasource.driver-class-name}")
     private String driverClassName;
-
+    
     @Value("${mybatis.mapper-locations}")
     private String mapperLocations;
     
-    @Bean
-    TransferEntityHandler transferEntityHandler() {
-        return new TransferEntityHandler();
-    }
+    static GenericContainer<?> redis = new GenericContainer<>(DockerImageName.parse("redis:latest"))
+            .withExposedPorts(6379);
     
-    @Bean
-    AuthServerService authService() {
-        return new AuthServerService();
-    }
-
-    @Bean
-    CartServerService cartService() {
-        return new CartServerService();
-    }
-
-    @Bean
-    CheckoutServerService checkoutService() {
-        return new CheckoutServerService();
-    }
-
-    @Bean
-    OrderServerService orderServerService() {
-        return new OrderServerService();
-    }
-
-    @Bean
-    PaymentServerService paymentService() {
-        return new PaymentServerService();
-    }
-
-    @Bean
-    ProductCatalogServerService productCatalogService() {
-        return new ProductCatalogServerService();
-    }
-
-    @Bean
-    UserServerService userService() {
-        return new UserServerService();
+    @DynamicPropertySource
+    static void redisProperties(DynamicPropertyRegistry registry) {
+        redis.start();
+        registry.add("spring.data.redis.host", redis::getHost);
+        registry.add("spring.data.redis.port", redis::getFirstMappedPort);
     }
     
     @Bean
@@ -91,7 +64,7 @@ public class ServiceConfiguration {
         dataSource.setDriverClassName(driverClassName);
         return dataSource;
     }
-
+    
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
@@ -101,6 +74,11 @@ public class ServiceConfiguration {
                 new PathMatchingResourcePatternResolver().getResources(mapperLocations)
         );
         return sessionFactory.getObject();
+    }
+    
+    @Bean
+    TransferEntityHandler transferEntityHandler() {
+        return new TransferEntityHandler();
     }
 
 }

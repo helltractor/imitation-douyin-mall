@@ -1,6 +1,6 @@
 package com.helltractor.mall.service;
 
-import com.helltractor.mall.config.ServiceConfiguration;
+import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.UserEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.UserServiceMapper;
@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -31,7 +32,7 @@ import static org.mockito.Mockito.*;
         "grpc.server.port=-1",
         "grpc.client.serviceServer.address=in-process:test"
 })
-@SpringJUnitConfig(ServiceConfiguration.class)
+@SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
 public class UserServerServiceTest {
     
@@ -40,6 +41,9 @@ public class UserServerServiceTest {
     
     @Mock
     private UserServiceMapper userServiceMapper;
+    
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
     
     @Autowired
     private TransferEntityHandler handler;
@@ -54,7 +58,9 @@ public class UserServerServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        this.userServerService.redisTemplate = redisTemplate;
         this.userServerService.handler = handler;
+        redisTemplate.getConnectionFactory().getConnection().flushAll();
     }
     
     @Test
@@ -113,8 +119,21 @@ public class UserServerServiceTest {
         assertNull(responseObverse.getError());
         LoginResp loginResponse = responseObverse.getValues().get(0);
         assertEquals(USER_ID, loginResponse.getUserId());
-
+   
         verify(userServiceMapper).searchUserByEmail(any(String.class));
+    }
+    
+    @Test
+    void testLoginTwice() {
+        when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(USER_ENTITY);
+        
+        LoginReq loginReq = LoginReq.newBuilder().setEmail(EMAIL).setPassword(PASSWORD).build();
+        StreamRecorder<LoginResp> responseObverse = StreamRecorder.create();
+        userServerService.login(loginReq, responseObverse);
+        verify(userServiceMapper).searchUserByEmail(any(String.class));
+        
+        userServerService.login(loginReq, responseObverse);
+        verify(userServiceMapper, times(1)).searchUserByEmail(any(String.class));
     }
     
     @Test

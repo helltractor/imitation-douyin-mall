@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserServiceMapperTest {
     
     @Autowired
-    private UserServiceMapper userServiceMapper;
+    UserServiceMapper userServiceMapper;
     
     @Test
     void testInsert() {

@@ -1,8 +1,8 @@
 package com.helltractor.mall.constant;
 
 import com.google.protobuf.LazyStringArrayList;
-import com.helltractor.mall.utils.JwtUtil;
-import com.helltractor.mall.utils.PasswordUtil;
+import com.helltractor.mall.util.JwtUtil;
+import com.helltractor.mall.util.PasswordUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

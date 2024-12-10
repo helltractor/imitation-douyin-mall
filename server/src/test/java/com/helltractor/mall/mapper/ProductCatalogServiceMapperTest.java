@@ -18,16 +18,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ProductCatalogServiceMapperTest {
 
     @Autowired
-    private ProductCatalogServiceMapper productCatalogServiceMapper;
+    ProductCatalogServiceMapper productCatalogServiceMapper;
     
     @Test
-    public void testInsert() {
+    void testInsert() {
         productCatalogServiceMapper.insert(PRODUCT_ENTITY);
         assertNotNull(PRODUCT_ENTITY.getId());
     }
     
     @Test
-    public void testSearchProductById() {
+    void testSearchProductById() {
         productCatalogServiceMapper.insert(PRODUCT_ENTITY);
         Product product = productCatalogServiceMapper.searchProductById(PRODUCT_ENTITY.getId());
         assertEquals(PRODUCT_ENTITY.getName(), product.getName());
@@ -36,7 +36,7 @@ public class ProductCatalogServiceMapperTest {
     }
     
     @Test
-    public void testSearchProductByQuery() {
+    void testSearchProductByQuery() {
         productCatalogServiceMapper.insert(PRODUCT_ENTITY);
         List<Product> products = productCatalogServiceMapper.searchProductByQuery(CATEGORY_NAME);
         assertNotNull(products);
@@ -44,7 +44,7 @@ public class ProductCatalogServiceMapperTest {
     }
     
     @Test
-    public void testListProducts() {
+    void testListProducts() {
         productCatalogServiceMapper.insert(PRODUCT_ENTITY);
         List<Product> products = productCatalogServiceMapper.listProducts(PAGE, PAGE_SIZE, CATEGORY_NAME);
         assertNotNull(products);

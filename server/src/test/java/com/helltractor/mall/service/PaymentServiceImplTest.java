@@ -1,7 +1,7 @@
 package com.helltractor.mall.service;
 
 
-import com.helltractor.mall.config.ServiceConfiguration;
+import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.PaymentEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.PaymentServiceMapper;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
         "grpc.server.port=-1",
         "grpc.client.serviceServer.address=in-process:test"
 })
-@SpringJUnitConfig(ServiceConfiguration.class)
+@SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
 public class PaymentServiceImplTest {
     

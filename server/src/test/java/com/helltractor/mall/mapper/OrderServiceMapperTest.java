@@ -20,10 +20,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OrderServiceMapperTest {
     
     @Autowired
-    private OrderServiceMapper orderServiceMapper;
+    OrderServiceMapper orderServiceMapper;
     
     @Test
-    public void testPaidStatusUnion() {
+    void testPaidStatusUnion() {
         orderServiceMapper.insertAddress(ORDER_ADDRESS_ENTITY);
         ORDER_ENTITY.setAddressBookId(ORDER_ADDRESS_ENTITY.getId());
         orderServiceMapper.insertOrders(ORDER_ENTITY);
@@ -39,7 +39,7 @@ public class OrderServiceMapperTest {
     }
     
     @Test
-    public void testAddressUnion() {
+    void testAddressUnion() {
         orderServiceMapper.insertAddress(ORDER_ADDRESS_ENTITY);
         
         assertNotNull(ORDER_ADDRESS_ENTITY.getId());
@@ -54,7 +54,7 @@ public class OrderServiceMapperTest {
     }
     
     @Test
-    public void testOrderItemsUnion() {
+    void testOrderItemsUnion() {
         orderServiceMapper.insertOrderItems(List.of(ORDER_DETAIL_ENTITY));
         List<OrderItem> orderItems = orderServiceMapper.searchOrderItems(ORDER_DETAIL_ENTITY.getOrderId());
         
@@ -64,7 +64,7 @@ public class OrderServiceMapperTest {
     }
     
     @Test
-    public void testSearchOrder() {
+    void testSearchOrder() {
         orderServiceMapper.insertAddress(ORDER_ADDRESS_ENTITY);
         ORDER_ENTITY.setAddressBookId(ORDER_ADDRESS_ENTITY.getId());
         orderServiceMapper.insertOrders(ORDER_ENTITY);
@@ -77,7 +77,7 @@ public class OrderServiceMapperTest {
     }
     
     @Test
-    public void testSearchOrders() {
+    void testSearchOrders() {
         orderServiceMapper.insertOrders(ORDER_ENTITY);
         List<OrderEntity> orderEntities = orderServiceMapper.searchOrders(USER_ID_TEST);
         
@@ -85,7 +85,7 @@ public class OrderServiceMapperTest {
     }
     
     @Test
-    public void testSearchOrderItems() {
+    void testSearchOrderItems() {
         orderServiceMapper.insertOrderItem(ORDER_DETAIL_ENTITY);
         List<OrderItem> orderItems = orderServiceMapper.searchOrderItems(ORDER_ENTITY.getOrderId());
         

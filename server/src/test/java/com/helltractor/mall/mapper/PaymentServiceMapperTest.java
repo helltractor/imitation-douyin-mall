@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PaymentServiceMapperTest {
     
     @Autowired
-    private PaymentServiceMapper paymentServiceMapper;
+    PaymentServiceMapper paymentServiceMapper;
     
     @Test
-    public void testInsert() {
+    void testInsert() {
         paymentServiceMapper.insert(PAYMENT_ENTITY);
         String transactionId = paymentServiceMapper.searchTransactionId(PAYMENT_ENTITY);
         

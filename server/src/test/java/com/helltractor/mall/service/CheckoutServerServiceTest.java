@@ -1,6 +1,6 @@
 package com.helltractor.mall.service;
 
-import com.helltractor.mall.config.ServiceConfiguration;
+import com.helltractor.mall.config.ServiceTestConfiguration;
 
 import com.helltractor.mall.proto.cart.*;
 import com.helltractor.mall.proto.checkout.CheckoutResp;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
         "grpc.server.port=-1",
         "grpc.client.serviceServer.address=in-process:test"
 })
-@SpringJUnitConfig(ServiceConfiguration.class)
+@SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
 class CheckoutServerServiceTest {
     

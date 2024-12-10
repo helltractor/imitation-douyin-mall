@@ -1,6 +1,6 @@
 package com.helltractor.mall.service;
 
-import com.helltractor.mall.config.ServiceConfiguration;
+import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.mapper.ProductCatalogServiceMapper;
 import com.helltractor.mall.proto.product.*;
 import io.grpc.internal.testing.StreamRecorder;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
         "grpc.server.port=-1",
         "grpc.client.serviceServer.address=in-process:test"
 })
-@SpringJUnitConfig(ServiceConfiguration.class)
+@SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
 public class ProductCatalogServerServiceTest {
     
