@@ -2,8 +2,8 @@ grpc:
   server:
     port: 9898
   client:
-    imitation-douyin-mall:
-      address: 'discovery:///imitation-douyin-mall'
+    service-server:
+      address: 'discovery:///service-server'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
@@ -13,21 +13,23 @@ server:
 
 spring:
   application:
-    name: imitation-douyin-mall
+    name: service-server
   config:
     import: optional:consul:localhost:8500
   cloud:
     consul:
-      discovery:
-        hostname: localhost
-        port: 8500
+      host: localhost
+      port: 8500
       config:
         enabled: true
-        prefix: config
         default-context: application
         profile-separator: ','
         data-key: data
         format: yaml
+      discovery:
+        health-check-interval: 10s
+        health-check-critical-timeout: 5s
+        health-check-url: localhost:${server.port}/actuator/health
     sentinel:
       eager: true
       transport:
@@ -40,6 +42,10 @@ spring:
             data-type: json
             rule-type: flow
             rule-key: sentinel-rules
+  security:
+    user:
+      name: ${helltractor.security.name}
+      password: ${helltractor.security.password}
   profiles:
     active: dev
   datasource:
@@ -47,12 +53,12 @@ spring:
     username: ${helltractor.datasource.username}
     password: ${helltractor.datasource.password}
     driver-class-name: ${helltractor.datasource.driver-class-name}
-
-#  redis:
-#    host: ${helltractor.redis.host}
-#    port: ${helltractor.redis.port}
-#    password: ${helltractor.redis.password}
-#    database: ${helltractor.redis.database}
+  data:
+    redis:
+      host: ${helltractor.data.redis.host}
+      port: ${helltractor.data.redis.port}
+      password: ${helltractor.data.redis.password}
+      database: ${helltractor.data.redis.database}
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
