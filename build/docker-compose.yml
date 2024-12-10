@@ -4,14 +4,13 @@ services:
     image: hashicorp/consul:latest
     container_name: consul
     ports:
-#      - "8300:8300"
-#      - "8301:8301"
-#      - "8302:8302"
+      - "8300:8300"
+      - "8302:8302"
       - "8500:8500"
-#      - "8600:8600"
+      - "8600:8600"
     volumes:
       - ./docker/consul-data:/consul/data
-    command: agent -server -bootstrap-expect=1 -ui -client=0.0.0.0
+    command: agent -server -ui -bootstrap-expect=1 -data-dir=/consul/data -node=agent-1 -client=0.0.0.0
 
   redis:
     image: redis:latest
