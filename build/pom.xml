@@ -11,7 +11,7 @@
 
     <modules>
         <module>../common</module>
-        <module>../grpc</module>
+        <module>../grpc-lib</module>
         <module>../parent</module>
         <module>../server</module>
     </modules>
