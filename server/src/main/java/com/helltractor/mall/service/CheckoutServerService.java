@@ -8,14 +8,16 @@ import com.helltractor.mall.proto.checkout.CheckoutServiceGrpc;
 import com.helltractor.mall.proto.order.*;
 import com.helltractor.mall.proto.payment.ChargeReq;
 import com.helltractor.mall.proto.payment.ChargeResp;
+import com.helltractor.mall.proto.payment.PaymentServiceGrpc;
 import com.helltractor.mall.proto.product.GetProductReq;
 import com.helltractor.mall.proto.product.GetProductResp;
 import com.helltractor.mall.proto.product.Product;
+import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
+
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +38,17 @@ import java.util.List;
 @GrpcService
 public class CheckoutServerService extends CheckoutServiceGrpc.CheckoutServiceImplBase {
     
-    @Autowired
-    CartClientService cartClientService;
+    @GrpcClient("service-server")
+    CartServiceGrpc.CartServiceBlockingStub cartClientService;
     
-    @Autowired
-    OrderClientService orderClientService;
+    @GrpcClient("service-server")
+    OrderServiceGrpc.OrderServiceBlockingStub orderClientService;
     
-    @Autowired
-    PaymentClientService paymentClientService;
+    @GrpcClient("service-server")
+    PaymentServiceGrpc.PaymentServiceBlockingStub paymentClientService;
     
-    @Autowired
-    ProductCatalogClientService productCatalogClientService;
+    @GrpcClient("service-server")
+    ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub productCatalogClientService;
     
     @Override
     public void checkout(CheckoutReq request, StreamObserver<CheckoutResp> responseObserver) {
@@ -141,9 +143,9 @@ public class CheckoutServerService extends CheckoutServiceGrpc.CheckoutServiceIm
         } catch (Exception e) {
             log.error("Checkout failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
 }

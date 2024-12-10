@@ -50,9 +50,9 @@ public class OrderServerService extends OrderServiceGrpc.OrderServiceImplBase {
         } catch (Exception e) {
             log.error("Place order failed", e);
            responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     public void listOrder(ListOrderReq request, StreamObserver<ListOrderResp> responseObserver) {
@@ -76,9 +76,9 @@ public class OrderServerService extends OrderServiceGrpc.OrderServiceImplBase {
         } catch (Exception e) {
             log.error("Mark order paid failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
 }

@@ -1,15 +1,16 @@
 package com.helltractor.mall.service;
 
 import com.helltractor.mall.entity.CartEntity;
-import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.CartServiceMapper;
+import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.proto.cart.*;
-
 import com.helltractor.mall.proto.product.GetProductReq;
 import com.helltractor.mall.proto.product.GetProductResp;
 import com.helltractor.mall.proto.product.Product;
+import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class CartServerService extends CartServiceGrpc.CartServiceImplBase {
     @Autowired
     CartServiceMapper cartServiceMapper;
     
-    @Autowired
-    ProductCatalogClientService productCatalogClientService;
+    @GrpcClient("service-server")
+    ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub productCatalogClientService;
     
     @Override
     public void addItem(AddItemReq request, StreamObserver<AddItemResp> responseObserver) {
@@ -47,9 +48,9 @@ public class CartServerService extends CartServiceGrpc.CartServiceImplBase {
         } catch (Exception e) {
             log.error("Add cartItem failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     @Override
@@ -63,9 +64,9 @@ public class CartServerService extends CartServiceGrpc.CartServiceImplBase {
         } catch (Exception e) {
             log.error("Get cart failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     @Override
@@ -78,9 +79,9 @@ public class CartServerService extends CartServiceGrpc.CartServiceImplBase {
         } catch (Exception e) {
             log.error("Empty cart failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
 }

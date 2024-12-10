@@ -74,7 +74,6 @@
         <result property="price_" column="price"/>
         <result property="description_" column="description"/>
         <result property="picture_" column="picture"/>
-<!--        <result property="categories_" column="categories" typeHandler="com.helltractor.mall.handler.JsonStringToListHandler"/>-->
     </resultMap>
 
 </mapper>

@@ -1,8 +1,8 @@
 package com.helltractor.mall.service;
 
 import com.helltractor.mall.entity.PaymentEntity;
-import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.PaymentServiceMapper;
+import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.proto.payment.ChargeReq;
 import com.helltractor.mall.proto.payment.ChargeResp;
 import com.helltractor.mall.proto.payment.CreditCardInfo;
@@ -43,9 +43,9 @@ public class PaymentServerService extends PaymentServiceGrpc.PaymentServiceImplB
         } catch (Exception e) {
             log.error("Charge failed");
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     private boolean validateCreditCard(CreditCardInfo creditCardInfo) {

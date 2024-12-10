@@ -7,7 +7,7 @@ import com.helltractor.mall.proto.auth.DeliveryResp;
 import com.helltractor.mall.proto.auth.VerifyResp;
 import com.helltractor.mall.proto.auth.VerifyTokenReq;
 
-import com.helltractor.mall.utils.JwtUtil;
+import com.helltractor.mall.util.JwtUtil;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -32,9 +32,9 @@ public class AuthServerService extends AuthServiceGrpc.AuthServiceImplBase {
         } catch (Exception e) {
             log.error("Deliver token failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     @Override
@@ -48,9 +48,9 @@ public class AuthServerService extends AuthServiceGrpc.AuthServiceImplBase {
         } catch (Exception e) {
             log.error("Verify token failed", e);
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
 }

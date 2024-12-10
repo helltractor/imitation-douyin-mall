@@ -8,7 +8,7 @@ import com.helltractor.mall.proto.order.OrderItem;
 import com.helltractor.mall.proto.order.PlaceOrderReq;
 import com.helltractor.mall.proto.payment.ChargeReq;
 import com.helltractor.mall.proto.user.RegisterReq;
-import com.helltractor.mall.utils.PasswordUtil;
+import com.helltractor.mall.util.PasswordUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

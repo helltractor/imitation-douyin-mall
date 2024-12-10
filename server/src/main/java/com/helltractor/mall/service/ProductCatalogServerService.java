@@ -27,9 +27,9 @@ public class ProductCatalogServerService extends ProductCatalogServiceGrpc.Produ
         } catch (Exception e) {
             log.error("List products failed");
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     @Override
@@ -46,9 +46,9 @@ public class ProductCatalogServerService extends ProductCatalogServiceGrpc.Produ
         } catch (Exception e) {
             log.error("Get product failed");
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
     
     @Override
@@ -62,9 +62,9 @@ public class ProductCatalogServerService extends ProductCatalogServiceGrpc.Produ
         } catch (Exception e) {
             log.error("Search products failed");
             responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
         }
-        
-        responseObserver.onCompleted();
     }
   
 }
