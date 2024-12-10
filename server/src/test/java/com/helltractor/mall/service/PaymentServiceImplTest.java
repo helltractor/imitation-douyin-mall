@@ -1,6 +1,5 @@
 package com.helltractor.mall.service;
 
-
 import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.PaymentEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
@@ -16,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.helltractor.mall.constant.BaseParamConstant.*;
@@ -26,12 +26,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 
-@SpringBootTest(properties = {
-        "grpc.server.in-process-name=test",
-        "grpc.server.port=-1",
-        "grpc.client.serviceServer.address=in-process:test"
-})
-@SpringJUnitConfig(ServiceTestConfiguration.class)
+@SpringBootTest
+@SpringJUnitConfig(classes = ServiceTestConfiguration.class)
+@ActiveProfiles("test")
 @DirtiesContext
 public class PaymentServiceImplTest {
     

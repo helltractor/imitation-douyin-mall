@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.helltractor.mall.constant.BaseParamConstant.ORDER_ID;
@@ -29,12 +30,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(properties = {
-        "grpc.server.in-process-name=test",
-        "grpc.server.port=-1",
-        "grpc.client.serviceServer.address=in-process:test"
-})
-@SpringJUnitConfig(ServiceTestConfiguration.class)
+@SpringBootTest
+@SpringJUnitConfig(classes = ServiceTestConfiguration.class)
+@ActiveProfiles("test")
 @DirtiesContext
 class CheckoutServerServiceTest {
     

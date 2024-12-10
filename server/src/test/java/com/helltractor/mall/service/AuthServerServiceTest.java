@@ -11,17 +11,15 @@ import io.grpc.internal.testing.StreamRecorder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.helltractor.mall.constant.BaseParamConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(properties = {
-        "grpc.server.in-process-name=test",
-        "grpc.server.port=-1",
-        "grpc.client.serviceServer.address=in-process:test"
-})
+@SpringBootTest
 @SpringJUnitConfig(classes = ServiceTestConfiguration.class)
+@ActiveProfiles("test")
 @DirtiesContext
 public class AuthServerServiceTest {
     

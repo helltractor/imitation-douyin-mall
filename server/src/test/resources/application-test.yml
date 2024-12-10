@@ -9,7 +9,10 @@ spring:
       host: localhost
       port: 6379
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+grpc:
+  server:
+    in-process-name: test
+    port: -1
+  client:
+    serviceServer:
+      address: in-process:test

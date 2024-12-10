@@ -28,11 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(properties = {
-        "grpc.server.in-process-name=test",
-        "grpc.server.port=-1",
-        "grpc.client.serviceServer.address=in-process:test",
-})
+@SpringBootTest
 @SpringJUnitConfig(ServiceTestConfiguration.class)
 @DirtiesContext
 public class UserServerServiceTest extends AbstractIntegrationTest {
