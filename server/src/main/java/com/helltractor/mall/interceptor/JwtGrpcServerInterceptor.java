@@ -5,16 +5,13 @@ import com.helltractor.mall.util.JwtUtil;
 
 import io.grpc.*;
 import io.jsonwebtoken.*;
-import org.springframework.stereotype.Component;
 
-@Component
 public class JwtGrpcServerInterceptor implements ServerInterceptor {
     
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall,
                                                                  Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler) {
         String value = metadata.get(JwtConstant.AUTHORIZATION_METADATA_KEY);
-        
         Status status = Status.OK;
         if (value == null) {
             status = Status.UNAUTHENTICATED.withDescription("Authorization token is missing");

@@ -3,13 +3,10 @@ package com.helltractor.mall.util;
 import com.helltractor.mall.constant.JwtConstant;
 import io.jsonwebtoken.*;
 
-import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
 
 public class JwtUtil {
-    
-    private static final SecretKey SIGNING_KEY = Jwts.SIG.HS256.key().build();
     
     private static Date generateExp() {
         return generateExp(System.currentTimeMillis());
@@ -23,7 +20,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(generateExp())
-                .signWith(SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
                 .compact();
     }
     
@@ -31,7 +28,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(generateExp())
-                .signWith(SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
                 .compact();
     }
     
@@ -39,15 +36,23 @@ public class JwtUtil {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(generateExp(currentTimeMillis))
-                .signWith(SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
+                .compact();
+    }
+    
+    public static String createJWT(String subject) {
+        return Jwts.builder()
+                .subject(subject)
+                .expiration(generateExp())
+                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
                 .compact();
     }
     
     public static Jws<Claims> parseJWT(String token) throws JwtException {
         return Jwts.parser()
-                .verifyWith(SIGNING_KEY)
+                .setSigningKey(JwtConstant.JWT_SIGNING_KEY)
                 .build()
-                .parseSignedClaims(token);
+                .parseClaimsJws(token);
     }
     
     public static boolean verifyJWTExp(String token) {
