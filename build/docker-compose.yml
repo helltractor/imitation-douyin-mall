@@ -11,6 +11,8 @@ services:
     volumes:
       - ./docker/consul-data:/consul/data
     command: agent -server -ui -bootstrap-expect=1 -data-dir=/consul/data -node=agent-1 -client=0.0.0.0
+    networks:
+      - mall
 
   redis:
     image: redis:latest
@@ -19,6 +21,8 @@ services:
       - "6379:6379"
     volumes:
       - ./docker/redis-data:/data
+    networks:
+      - mall
 
   mysql:
     image: mysql:latest
@@ -32,6 +36,8 @@ services:
     volumes:
       - ./mysql/schema.sql:/docker-entrypoint-initdb/mall-schema.sql.d:ro
       - ./docker/mysql-data:/var/lib/mysql
+    networks:
+      - mall
 
   sentinel:
     image: bladex/sentinel-dashboard:latest
@@ -43,7 +49,9 @@ services:
       JVM_OPTS: -server -Xmx512M -Xms512M -XX:MaxMetaspaceSize=256M -XX:CompressedClassSpaceSize=50M -XX:ReservedCodeCacheSize=240M -XX:MaxDirectMemorySize=400M
     volumes:
       - ./docker/sentinel-logs:/root/logs
+    networks:
+      - mall
 
 networks:
-  default:
-    name: mall
+  mall:
+    driver: bridge
