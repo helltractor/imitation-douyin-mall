@@ -7,9 +7,9 @@ option java_package = "com.helltractor.mall.proto.cart";
 option java_outer_classname = "CartProto";
 
 service CartService {
-  rpc AddItem(AddItemReq) returns (AddItemResp) {}
-  rpc GetCart(GetCartReq) returns (GetCartResp) {}
-  rpc EmptyCart(EmptyCartReq) returns (EmptyCartResp) {}
+  rpc AddItem(AddItemReq) returns (AddItemResp) { }
+  rpc GetCart(GetCartReq) returns (GetCartResp) { }
+  rpc EmptyCart(EmptyCartReq) returns (EmptyCartResp) { }
 }
 
 message CartItem {
@@ -22,7 +22,7 @@ message AddItemReq {
   CartItem item = 2;
 }
 
-message AddItemResp {}
+message AddItemResp { }
 
 message EmptyCartReq {
   uint32 user_id = 1;
@@ -41,4 +41,4 @@ message Cart {
   repeated CartItem items = 2;
 }
 
-message EmptyCartResp {}
+message EmptyCartResp { }

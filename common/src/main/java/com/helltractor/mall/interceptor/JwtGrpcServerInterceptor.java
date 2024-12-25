@@ -1,26 +1,27 @@
 package com.helltractor.mall.interceptor;
 
-import com.helltractor.mall.constant.JwtConstant;
+import com.helltractor.mall.constant.Constant;
 import com.helltractor.mall.util.JwtUtil;
-
 import io.grpc.*;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 
 public class JwtGrpcServerInterceptor implements ServerInterceptor {
     
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall,
                                                                  Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler) {
-        String value = metadata.get(JwtConstant.AUTHORIZATION_METADATA_KEY);
+        String value = metadata.get(Constant.AUTHORIZATION_METADATA_KEY);
         Status status = Status.OK;
         if (value == null) {
             status = Status.UNAUTHENTICATED.withDescription("Authorization token is missing");
-        } else if (!value.startsWith(JwtConstant.BEARER_TYPE)) {
+        } else if (!value.startsWith(Constant.BEARER_TYPE)) {
             status = Status.UNAUTHENTICATED.withDescription("Unknown authorization type");
         } else {
             Jws<Claims> claims = null;
             // remove authorization type prefix
-            String token = value.substring(JwtConstant.BEARER_TYPE.length()).trim();
+            String token = value.substring(Constant.BEARER_TYPE.length()).trim();
             try {
                 // verify token signature and parse claims
                 claims = JwtUtil.parseJWT(token);
@@ -30,7 +31,7 @@ public class JwtGrpcServerInterceptor implements ServerInterceptor {
             if (claims != null) {
                 // set client id into current context
                 Context ctx = Context.current()
-                        .withValue(JwtConstant.CLIENT_ID_CONTEXT_KEY, claims.getPayload().getSubject());
+                        .withValue(Constant.CLIENT_ID_CONTEXT_KEY, claims.getPayload().getSubject());
                 return Contexts.interceptCall(ctx, serverCall, metadata, serverCallHandler);
             }
         }

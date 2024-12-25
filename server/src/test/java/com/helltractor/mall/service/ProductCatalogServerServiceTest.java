@@ -58,7 +58,7 @@ public class ProductCatalogServerServiceTest {
         
         verify(productCatalogServiceMapper).listProducts(PAGE, PAGE_SIZE, CATEGORY_NAME);
     }
-
+    
     @Test
     void testGetProduct() {
         when(productCatalogServiceMapper.searchProductById(PRODUCT_ID_ONE)).thenReturn(PRODUCT);
@@ -99,5 +99,5 @@ public class ProductCatalogServerServiceTest {
         
         verify(productCatalogServiceMapper).searchProductByQuery(QUERY);
     }
-
+    
 }

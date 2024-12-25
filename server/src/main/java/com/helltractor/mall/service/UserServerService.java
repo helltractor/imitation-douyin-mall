@@ -1,11 +1,10 @@
 package com.helltractor.mall.service;
 
 import com.helltractor.mall.entity.UserEntity;
-import com.helltractor.mall.mapper.UserServiceMapper;
 import com.helltractor.mall.handler.TransferEntityHandler;
+import com.helltractor.mall.mapper.UserServiceMapper;
 import com.helltractor.mall.proto.user.*;
 import com.helltractor.mall.util.PasswordUtil;
-import io.grpc.Internal;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -30,13 +29,14 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void register(RegisterReq request, StreamObserver<RegisterResp> responseObserver) {
         try {
-            UserEntity userEntity = handler.transUserEntity(request);
-            userServiceMapper.insert(userEntity);
-            if (userEntity == null || userEntity.getId() == 0) {
+            UserEntity userEntity = userServiceMapper.searchUserByEmail(request.getEmail());
+            if (userEntity != null && userEntity.getId() != 0) {
                 log.error("Email already exists");
                 throw new IllegalArgumentException("Email already exists");
             }
             
+            userEntity = handler.transUserEntity(request);
+            userServiceMapper.insert(userEntity);
             RegisterResp response = RegisterResp.newBuilder()
                     .setUserId(userEntity.getId())
                     .build();
@@ -52,29 +52,29 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void login(LoginReq request, StreamObserver<LoginResp> responseObserver) {
         try {
-            UserEntity user;
+            UserEntity userEntity;
             Integer userId = (Integer) redisTemplate.opsForHash().get(request.getEmail(), request.getPassword());
             
             if (userId == null) {
-                user = userServiceMapper.searchUserByEmail(request.getEmail());
-                if (user == null || user.getId() == 0) {
+                userEntity = userServiceMapper.searchUserByEmail(request.getEmail());
+                if (userEntity == null || userEntity.getId() == 0) {
                     log.error("User not found");
                     throw new IllegalArgumentException("User not found");
                 }
                 
-                boolean isPasswordValid = PasswordUtil.matches(request.getPassword(), user.getPassword());
+                boolean isPasswordValid = PasswordUtil.matches(request.getPassword(), userEntity.getPassword());
                 if (!isPasswordValid) {
                     log.error("Password is incorrect");
                     throw new IllegalArgumentException("Password is incorrect");
                 }
                 
-                redisTemplate.opsForHash().put(request.getEmail(), request.getPassword(), user.getId());
+                redisTemplate.opsForHash().put(request.getEmail(), request.getPassword(), userEntity.getId());
                 redisTemplate.expire(request.getEmail(), 1, TimeUnit.HOURS);
             } else {
-                user = UserEntity.builder().id(userId).build();
+                userEntity = UserEntity.builder().id(userId).build();
             }
             LoginResp response = LoginResp.newBuilder()
-                    .setUserId(user.getId())
+                    .setUserId(userEntity.getId())
                     .build();
             responseObserver.onNext(response);
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-syntax="proto3";
+syntax = "proto3";
 
 package user;
 
@@ -7,8 +7,8 @@ option java_package = "com.helltractor.mall.proto.user";
 option java_outer_classname = "UserProto";
 
 service UserService {
-  rpc Register(RegisterReq) returns (RegisterResp) {}
-  rpc Login(LoginReq) returns (LoginResp) {}
+  rpc Register(RegisterReq) returns (RegisterResp) { }
+  rpc Login(LoginReq) returns (LoginResp) { }
 }
 
 message RegisterReq {
@@ -22,7 +22,7 @@ message RegisterResp {
 }
 
 message LoginReq {
-  string email= 1;
+  string email = 1;
   string password = 2;
 }
 

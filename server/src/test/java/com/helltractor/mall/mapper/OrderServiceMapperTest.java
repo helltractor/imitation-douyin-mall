@@ -1,7 +1,6 @@
 package com.helltractor.mall.mapper;
 
 import com.helltractor.mall.config.AbstractIntegrationTest;
-import com.helltractor.mall.config.ServiceTestConfiguration;
 import com.helltractor.mall.entity.OrderEntity;
 import com.helltractor.mall.proto.order.Address;
 import com.helltractor.mall.proto.order.Order;
@@ -13,13 +12,14 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 
 import java.util.List;
 
-import static com.helltractor.mall.constant.BaseParamConstant.*;
+import static com.helltractor.mall.constant.BaseParamConstant.USER_ID_TEST;
 import static com.helltractor.mall.constant.ModelConstant.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class OrderServiceMapperTest extends AbstractIntegrationTest {
+public class OrderServiceMapperTest {
     
     @Autowired
     OrderServiceMapper orderServiceMapper;
@@ -33,9 +33,9 @@ public class OrderServiceMapperTest extends AbstractIntegrationTest {
         
         int paidStatus = orderServiceMapper.searchPaidStatus(USER_ID_TEST, ORDER_ENTITY.getOrderId());
         assertEquals(0, paidStatus);
-
+        
         orderServiceMapper.updatePaidStatus(USER_ID_TEST, ORDER_ENTITY.getOrderId());
-
+        
         paidStatus = orderServiceMapper.searchPaidStatus(USER_ID_TEST, ORDER_ENTITY.getOrderId());
         assertEquals(1, paidStatus);
     }

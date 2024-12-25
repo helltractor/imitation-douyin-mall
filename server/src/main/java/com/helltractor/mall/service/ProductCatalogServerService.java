@@ -66,5 +66,5 @@ public class ProductCatalogServerService extends ProductCatalogServiceGrpc.Produ
             responseObserver.onCompleted();
         }
     }
-  
+    
 }

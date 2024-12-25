@@ -5,12 +5,12 @@ import com.helltractor.mall.entity.CartEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.CartServiceMapper;
 import com.helltractor.mall.proto.cart.*;
-
 import com.helltractor.mall.proto.product.GetProductReq;
 import com.helltractor.mall.proto.product.GetProductResp;
 import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
 import io.grpc.internal.testing.StreamRecorder;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
 
-import static com.helltractor.mall.constant.BaseParamConstant.*;
+import static com.helltractor.mall.constant.BaseParamConstant.USER_ID;
 import static com.helltractor.mall.constant.ModelConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

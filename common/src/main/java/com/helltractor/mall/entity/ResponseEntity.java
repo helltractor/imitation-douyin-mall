@@ -4,15 +4,13 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * 后端统一返回结果
- * @param <T>
- */
 @Data
 public class ResponseEntity<T> implements Serializable {
     
     private Integer code;
+    
     private String msg;
+    
     private T data;
     
     public static <T> ResponseEntity<T> success() {
@@ -34,4 +32,5 @@ public class ResponseEntity<T> implements Serializable {
         responseEntity.code = 0;
         return responseEntity;
     }
+    
 }

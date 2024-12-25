@@ -9,9 +9,9 @@ option java_package = "com.helltractor.mall.proto.order";
 option java_outer_classname = "OrderProto";
 
 service OrderService {
-  rpc PlaceOrder(PlaceOrderReq) returns (PlaceOrderResp) {}
-  rpc ListOrder(ListOrderReq) returns (ListOrderResp) {}
-  rpc MarkOrderPaid(MarkOrderPaidReq) returns (MarkOrderPaidResp) {}
+  rpc PlaceOrder(PlaceOrderReq) returns (PlaceOrderResp) { }
+  rpc ListOrder(ListOrderReq) returns (ListOrderResp) { }
+  rpc MarkOrderPaid(MarkOrderPaidReq) returns (MarkOrderPaidResp) { }
 }
 
 message Address {
@@ -67,4 +67,4 @@ message MarkOrderPaidReq {
   string order_id = 2;
 }
 
-message MarkOrderPaidResp {}
+message MarkOrderPaidResp { }

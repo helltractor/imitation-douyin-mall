@@ -42,7 +42,7 @@ public class BaseParamConstant {
     public static final Integer PAGE = 0;
     public static final Integer PAGE_SIZE = 10;
     public static final String CATEGORY_NAME = "category";
-    public static final LazyStringArrayList CATEGORIES = new LazyStringArrayList(){{
+    public static final LazyStringArrayList CATEGORIES = new LazyStringArrayList() {{
         add(CATEGORY_NAME);
     }};
     public static final String QUERY = "query";
@@ -80,7 +80,7 @@ public class BaseParamConstant {
     public static final String LASTNAME = "Helltractor";
     
     public static final String TOKEN = JwtUtil.createJWT(Map.of(JwtClaimConstant.USER_ID, USER_ID_TEST));
-    public static final String TOKEN_EXPIRED = JwtUtil.createJWT(Map.of(JwtClaimConstant.USER_ID, USER_ID_TEST), System.currentTimeMillis() - JwtConstant.TTL);
+    public static final String TOKEN_EXPIRED = JwtUtil.createJWT(Map.of(JwtClaimConstant.USER_ID, USER_ID_TEST), System.currentTimeMillis() - Constant.JWT_TTL);
     
     public static final Float AMOUNT = BigDecimal.valueOf(new Random().nextFloat() * 10000)
             .setScale(2, RoundingMode.HALF_UP)

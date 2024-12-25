@@ -19,7 +19,7 @@ public class UserEntity implements Serializable {
     private Integer id;
     
     private String password;
-
+    
     private String email;
     
     private String confirmPassword;

@@ -13,7 +13,6 @@ import com.helltractor.mall.proto.product.GetProductReq;
 import com.helltractor.mall.proto.product.GetProductResp;
 import com.helltractor.mall.proto.product.Product;
 import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
-
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -23,16 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-	Run
-
-1. get cart
-2. calculate cart
-3. create order
-4. empty cart
-5. pay
-6. change order result
-7. finish
-**/
+ * Run
+ * <p>
+ * 1. get cart
+ * 2. calculate cart
+ * 3. create order
+ * 4. empty cart
+ * 5. pay
+ * 6. change order result
+ * 7. finish
+ **/
 
 @Slf4j
 @GrpcService
@@ -132,7 +131,7 @@ public class CheckoutServerService extends CheckoutServiceGrpc.CheckoutServiceIm
                     .build();
             
             orderClientService.markOrderPaid(markOrderPaidReq);
-         
+            
             // finish
             CheckoutResp checkoutResp = CheckoutResp.newBuilder()
                     .setOrderId(placeOrderResp.getOrder().getOrderId())

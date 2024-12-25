@@ -7,7 +7,7 @@ option java_package = "com.helltractor.mall.proto.payment";
 option java_outer_classname = "PaymentProto";
 
 service PaymentService {
-  rpc Charge(ChargeReq) returns (ChargeResp) {}
+  rpc Charge(ChargeReq) returns (ChargeResp) { }
 }
 
 message CreditCardInfo {

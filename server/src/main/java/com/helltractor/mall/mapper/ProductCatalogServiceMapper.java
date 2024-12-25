@@ -2,7 +2,6 @@ package com.helltractor.mall.mapper;
 
 import com.helltractor.mall.entity.ProductEntity;
 import com.helltractor.mall.proto.product.Product;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

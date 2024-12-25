@@ -9,9 +9,9 @@ import com.helltractor.mall.proto.user.LoginReq;
 import com.helltractor.mall.proto.user.LoginResp;
 import com.helltractor.mall.proto.user.RegisterReq;
 import com.helltractor.mall.proto.user.RegisterResp;
-
 import io.grpc.internal.testing.StreamRecorder;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -24,7 +24,6 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static com.helltractor.mall.constant.BaseParamConstant.*;
 import static com.helltractor.mall.constant.ModelConstant.USER_ENTITY_TEST;
 import static org.junit.jupiter.api.Assertions.*;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -33,24 +32,20 @@ import static org.mockito.Mockito.*;
 @DirtiesContext
 public class UserServerServiceTest extends AbstractIntegrationTest {
     
-    @InjectMocks
-    private UserServerService userServerService;
-    
-    @Mock
-    private UserServiceMapper userServiceMapper;
-    
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-    
-    @Autowired
-    private TransferEntityHandler handler;
-    
     public static final UserEntity USER_ENTITY = UserEntity.builder()
             .id(USER_ID)
             .email(EMAIL)
             .password(ENCRYPT_PASSWORD)
             .confirmPassword(CONFIRM_PASSWORD)
             .build();
+    @InjectMocks
+    private UserServerService userServerService;
+    @Mock
+    private UserServiceMapper userServiceMapper;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private TransferEntityHandler handler;
     
     @BeforeEach
     void setUp() {
@@ -75,11 +70,11 @@ public class UserServerServiceTest extends AbstractIntegrationTest {
                 .build();
         StreamRecorder<RegisterResp> responseObverse = StreamRecorder.create();
         userServerService.register(request, responseObverse);
-
+        
         assertNull(responseObverse.getError());
         RegisterResp response = responseObverse.getValues().get(0);
         assertEquals(USER_ID, response.getUserId());
-
+        
         verify(userServiceMapper).insert(any(UserEntity.class));
     }
     
@@ -108,15 +103,15 @@ public class UserServerServiceTest extends AbstractIntegrationTest {
     @Test
     void testLogin() {
         when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(USER_ENTITY);
-
+        
         LoginReq loginReq = LoginReq.newBuilder().setEmail(EMAIL).setPassword(PASSWORD).build();
         StreamRecorder<LoginResp> responseObverse = StreamRecorder.create();
         userServerService.login(loginReq, responseObverse);
-
+        
         assertNull(responseObverse.getError());
         LoginResp loginResponse = responseObverse.getValues().get(0);
         assertEquals(USER_ID, loginResponse.getUserId());
-   
+        
         verify(userServiceMapper).searchUserByEmail(any(String.class));
     }
     

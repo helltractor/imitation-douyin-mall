@@ -1,8 +1,9 @@
 package com.helltractor.mall.service;
 
 import com.helltractor.mall.config.ServiceTestConfiguration;
-
-import com.helltractor.mall.proto.cart.*;
+import com.helltractor.mall.proto.cart.CartServiceGrpc;
+import com.helltractor.mall.proto.cart.GetCartReq;
+import com.helltractor.mall.proto.cart.GetCartResp;
 import com.helltractor.mall.proto.checkout.CheckoutResp;
 import com.helltractor.mall.proto.order.OrderResult;
 import com.helltractor.mall.proto.order.OrderServiceGrpc;
@@ -17,7 +18,9 @@ import com.helltractor.mall.proto.product.ProductCatalogServiceGrpc;
 import io.grpc.internal.testing.StreamRecorder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,7 +28,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.helltractor.mall.constant.BaseParamConstant.ORDER_ID;
 import static com.helltractor.mall.constant.BaseParamConstant.TRANSACTION_ID;
-import static com.helltractor.mall.constant.ModelConstant.*;
+import static com.helltractor.mall.constant.ModelConstant.CART;
+import static com.helltractor.mall.constant.ModelConstant.CHECKOUT_REQ;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -50,7 +54,7 @@ class CheckoutServerServiceTest {
     
     @Mock
     private ProductCatalogServiceGrpc.ProductCatalogServiceBlockingStub productCatalogClientService;
-
+    
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);

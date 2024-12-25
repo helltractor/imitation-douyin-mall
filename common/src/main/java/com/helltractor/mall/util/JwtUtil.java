@@ -1,6 +1,6 @@
 package com.helltractor.mall.util;
 
-import com.helltractor.mall.constant.JwtConstant;
+import com.helltractor.mall.constant.Constant;
 import io.jsonwebtoken.*;
 
 import java.util.Date;
@@ -13,14 +13,14 @@ public class JwtUtil {
     }
     
     private static Date generateExp(long currentTimeMillis) {
-        return new Date(currentTimeMillis + JwtConstant.TTL);
+        return new Date(currentTimeMillis + Constant.JWT_TTL);
     }
     
     public static String createJWT(Map<String, Object> claims) {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(generateExp())
-                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, Constant.JWT_SIGNING_KEY)
                 .compact();
     }
     
@@ -28,7 +28,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(generateExp())
-                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, Constant.JWT_SIGNING_KEY)
                 .compact();
     }
     
@@ -36,7 +36,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .claims(claims)
                 .expiration(generateExp(currentTimeMillis))
-                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, Constant.JWT_SIGNING_KEY)
                 .compact();
     }
     
@@ -44,13 +44,13 @@ public class JwtUtil {
         return Jwts.builder()
                 .subject(subject)
                 .expiration(generateExp())
-                .signWith(SignatureAlgorithm.HS256, JwtConstant.JWT_SIGNING_KEY)
+                .signWith(SignatureAlgorithm.HS256, Constant.JWT_SIGNING_KEY)
                 .compact();
     }
     
     public static Jws<Claims> parseJWT(String token) throws JwtException {
         return Jwts.parser()
-                .setSigningKey(JwtConstant.JWT_SIGNING_KEY)
+                .setSigningKey(Constant.JWT_SIGNING_KEY)
                 .build()
                 .parseClaimsJws(token);
     }

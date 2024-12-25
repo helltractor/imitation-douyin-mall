@@ -1,11 +1,10 @@
 package com.helltractor.mall.interceptor;
 
-import lombok.extern.slf4j.Slf4j;
-
 import io.grpc.Metadata;
 import io.grpc.ServerCall;
 import io.grpc.ServerCallHandler;
 import io.grpc.ServerInterceptor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LogGrpcInterceptor implements ServerInterceptor {

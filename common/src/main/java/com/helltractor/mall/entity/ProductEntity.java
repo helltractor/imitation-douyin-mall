@@ -1,6 +1,5 @@
 package com.helltractor.mall.entity;
 
-import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

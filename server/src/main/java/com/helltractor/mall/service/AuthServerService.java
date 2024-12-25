@@ -1,12 +1,7 @@
 package com.helltractor.mall.service;
 
 import com.helltractor.mall.constant.JwtClaimConstant;
-import com.helltractor.mall.proto.auth.AuthServiceGrpc;
-import com.helltractor.mall.proto.auth.DeliverTokenReq;
-import com.helltractor.mall.proto.auth.DeliveryResp;
-import com.helltractor.mall.proto.auth.VerifyResp;
-import com.helltractor.mall.proto.auth.VerifyTokenReq;
-
+import com.helltractor.mall.proto.auth.*;
 import com.helltractor.mall.util.JwtUtil;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +17,7 @@ public class AuthServerService extends AuthServiceGrpc.AuthServiceImplBase {
     @Override
     public void deliverTokenByRPC(DeliverTokenReq request, StreamObserver<DeliveryResp> responseObserver) {
         try {
-            Map claims = new HashMap<>();
+            Map<String, Object> claims = new HashMap<>();
             claims.put(JwtClaimConstant.USER_ID, request.getUserId());
             String token = JwtUtil.createJWT(claims);
             DeliveryResp response = DeliveryResp.newBuilder()

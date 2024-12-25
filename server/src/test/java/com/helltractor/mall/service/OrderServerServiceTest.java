@@ -83,7 +83,7 @@ public class OrderServerServiceTest {
         orderServerService.listOrder(listOrderReq, responseObserver);
         
         assertNull(responseObserver.getError());
-
+        
         ListOrderResp response = responseObserver.getValues().get(0);
         assertEquals(orders, response.getOrdersList());
         

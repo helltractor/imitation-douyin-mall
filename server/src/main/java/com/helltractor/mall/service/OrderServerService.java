@@ -6,7 +6,6 @@ import com.helltractor.mall.entity.OrderEntity;
 import com.helltractor.mall.handler.TransferEntityHandler;
 import com.helltractor.mall.mapper.OrderServiceMapper;
 import com.helltractor.mall.proto.order.*;
-
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -49,7 +48,7 @@ public class OrderServerService extends OrderServiceGrpc.OrderServiceImplBase {
             responseObserver.onNext(response);
         } catch (Exception e) {
             log.error("Place order failed", e);
-           responseObserver.onError(e);
+            responseObserver.onError(e);
         } finally {
             responseObserver.onCompleted();
         }
@@ -64,7 +63,7 @@ public class OrderServerService extends OrderServiceGrpc.OrderServiceImplBase {
             log.error("List order failed", e);
             responseObserver.onError(e);
         }
-
+        
         responseObserver.onCompleted();
     }
     

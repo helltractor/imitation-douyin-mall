@@ -9,13 +9,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 
 import java.util.List;
 
-import static com.helltractor.mall.constant.BaseParamConstant.*;
+import static com.helltractor.mall.constant.BaseParamConstant.USER_ID_TEST;
 import static com.helltractor.mall.constant.ModelConstant.CART_ENTITY;
 import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CartServiceMapperTest extends AbstractIntegrationTest {
+public class CartServiceMapperTest {
     
     @Autowired
     CartServiceMapper cartServiceMapper;

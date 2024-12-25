@@ -30,7 +30,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 @SpringJUnitConfig(classes = ServiceTestConfiguration.class)
 @ActiveProfiles("test")
 @DirtiesContext
-public class PaymentServiceImplTest {
+public class PaymentServiceTest {
     
     @InjectMocks
     private PaymentServerService paymentService;
@@ -50,11 +50,11 @@ public class PaymentServiceImplTest {
     @Test
     public void testCharge() {
         ChargeReq chargeReq = ChargeReq.newBuilder()
-            .setAmount(AMOUNT)
-            .setCreditCard(CREDIT_CARD_INFO)
-            .setOrderId(ORDER_ID)
-            .setUserId(USER_ID)
-            .build();
+                .setAmount(AMOUNT)
+                .setCreditCard(CREDIT_CARD_INFO)
+                .setOrderId(ORDER_ID)
+                .setUserId(USER_ID)
+                .build();
         StreamRecorder<ChargeResp> responseObserver = StreamRecorder.create();
         paymentService.charge(chargeReq, responseObserver);
         
@@ -62,18 +62,18 @@ public class PaymentServiceImplTest {
         
         ChargeResp chargeResp = responseObserver.getValues().get(0);
         assertNotNull(chargeResp.getTransactionId());
-
+        
         verify(paymentServiceMapper).insert(any(PaymentEntity.class));
     }
     
     @Test
     void testChargeInvalidCreditCard() {
         ChargeReq chargeReq = ChargeReq.newBuilder()
-            .setAmount(AMOUNT)
-            .setCreditCard(CREDIT_CARD_INFO_INVALID_NUMBER)
-            .setOrderId(ORDER_ID)
-            .setUserId(USER_ID)
-            .build();
+                .setAmount(AMOUNT)
+                .setCreditCard(CREDIT_CARD_INFO_INVALID_NUMBER)
+                .setOrderId(ORDER_ID)
+                .setUserId(USER_ID)
+                .build();
         StreamRecorder<ChargeResp> responseObserver = StreamRecorder.create();
         paymentService.charge(chargeReq, responseObserver);
         

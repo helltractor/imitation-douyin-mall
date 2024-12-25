@@ -9,7 +9,7 @@ option java_package = "com.helltractor.mall.proto.checkout";
 option java_outer_classname = "CheckoutProto";
 
 service CheckoutService {
-  rpc Checkout(CheckoutReq) returns (CheckoutResp) {}
+  rpc Checkout(CheckoutReq) returns (CheckoutResp) { }
 }
 
 message Address {
