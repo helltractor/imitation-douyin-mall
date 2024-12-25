@@ -57,6 +57,7 @@ public class UserServerServiceTest extends AbstractIntegrationTest {
     
     @Test
     void testRegister() {
+        when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(null);
         doAnswer(invocationOnMock -> {
             UserEntity userEntity = invocationOnMock.getArgument(0);
             userEntity.setId(USER_ID);
@@ -75,17 +76,14 @@ public class UserServerServiceTest extends AbstractIntegrationTest {
         RegisterResp response = responseObverse.getValues().get(0);
         assertEquals(USER_ID, response.getUserId());
         
+        verify(userServiceMapper).searchUserByEmail(any(String.class));
         verify(userServiceMapper).insert(any(UserEntity.class));
     }
     
     @Test
     void testRegisterFailure() {
-        doAnswer(invocationOnMock -> {
-            UserEntity userEntity = invocationOnMock.getArgument(0);
-            userEntity.setId(USER_ID_TEST);
-            return null;
-        }).when(userServiceMapper).insert(any(UserEntity.class));
-        
+        when(userServiceMapper.searchUserByEmail(any(String.class))).thenReturn(USER_ENTITY);
+
         RegisterReq request = RegisterReq.newBuilder()
                 .setEmail(EMAIL)
                 .setPassword(PASSWORD)
@@ -97,7 +95,8 @@ public class UserServerServiceTest extends AbstractIntegrationTest {
         assertNotNull(responseObverse.getError());
         assertEquals("Email already exists", responseObverse.getError().getMessage());
         
-        verify(userServiceMapper).insert(any(UserEntity.class));
+        verify(userServiceMapper).searchUserByEmail(any(String.class));
+        verify(userServiceMapper, times(0)).insert(any(UserEntity.class));
     }
     
     @Test

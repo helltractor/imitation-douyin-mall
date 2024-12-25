@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class OrderServiceMapperTest {
+public class OrderServiceMapperTest extends AbstractIntegrationTest {
     
     @Autowired
     OrderServiceMapper orderServiceMapper;

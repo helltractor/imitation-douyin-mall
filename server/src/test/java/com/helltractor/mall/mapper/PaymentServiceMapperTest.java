@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PaymentServiceMapperTest {
+public class PaymentServiceMapperTest extends AbstractIntegrationTest {
     
     @Autowired
     PaymentServiceMapper paymentServiceMapper;

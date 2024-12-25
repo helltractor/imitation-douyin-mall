@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CartServiceMapperTest {
+public class CartServiceMapperTest extends AbstractIntegrationTest {
     
     @Autowired
     CartServiceMapper cartServiceMapper;
