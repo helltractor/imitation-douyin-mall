@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: service-client
+  cloud:
+    consul:
+      discovery:
+        hostname: localhost
+        port: 8500
+    sentinel:
+      eager: true
+      transport:
+        dashboard: localhost:8858
+
+grpc:
+  client:
+    service-server:
+      address: "discovery:///service-server"
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
